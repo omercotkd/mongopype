@@ -1,6 +1,10 @@
 from typing import Literal, Any, Optional, TypedDict, Union
 
 
+Stage = dict[str, Any]
+
+
+
 # TODO expand these type
 Expression = Union[str, int, float, dict[str, Any], list[Any]]
 
@@ -101,21 +105,7 @@ Accumulator = Literal[
     "$topN",
 ]
 
-BucketAutoGranularity = Literal[
-    "R5",
-    "R10",
-    "R20",
-    "R40",
-    "R80",
-    "1-2-5",
-    "E6",
-    "E12",
-    "E24",
-    "E48",
-    "E96",
-    "E192",
-    "POWERSOF2",
-]
+AccumulatorExpression = dict[Accumulator, Expression]
 
 ChaneStreamFullDocumentOptions = Literal[
     "default",
