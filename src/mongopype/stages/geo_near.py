@@ -1,9 +1,11 @@
-from typing import Literal, Any
+from typing import Any, TypedDict
 
 # https://www.mongodb.com/docs/manual/reference/operator/aggregation/geoNear/
 
-GeoNear = dict[Literal["$geoNear"], dict[str, Any]]  # Required: near, distanceField
+GeoNearSpec = dict[str, Any]  # Required: near, distanceField
 
-def verify_geo_near(stage: GeoNear, version: str, pipeline_index: int) -> bool:
+GeoNear = TypedDict("GeoNear", {"$geoNear": GeoNearSpec})
+
+def verify_geo_near(spec: GeoNearSpec, version: str, pipeline_index: int) -> bool:
     # TODO implement verification logic (near + distanceField required)
     return True

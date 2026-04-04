@@ -1,9 +1,11 @@
-from typing import Literal
+from typing import TypedDict
 
 # https://www.mongodb.com/docs/manual/reference/operator/aggregation/skip/
 
-Skip = dict[Literal["$skip"], int]
+SkipSpec = int
 
-def verify_skip(stage: Skip, version: str, pipeline_index: int) -> bool:
+Skip = TypedDict("Skip", {"$skip": SkipSpec})
+
+def verify_skip(spec: SkipSpec, version: str, pipeline_index: int) -> bool:
     # TODO implement verification logic (non-negative check)
     return True

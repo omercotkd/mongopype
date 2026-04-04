@@ -1,9 +1,11 @@
-from typing import Literal, Any
+from typing import Any, TypedDict
 
 # https://www.mongodb.com/docs/atlas/atlas-search/
 
-SearchMeta = dict[Literal["$searchMeta"], dict[str, Any]]
+SearchMetaSpec = dict[str, Any]
 
-def verify_search_meta(stage: SearchMeta, version: str, pipeline_index: int) -> bool:
+SearchMeta = TypedDict("SearchMeta", {"$searchMeta": SearchMetaSpec})
+
+def verify_search_meta(spec: SearchMetaSpec, version: str, pipeline_index: int) -> bool:
     # TODO implement verification logic (must follow $search)
     return True

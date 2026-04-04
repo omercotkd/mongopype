@@ -1,9 +1,11 @@
-from typing import Literal, Any
+from typing import Any, TypedDict
 
 # https://www.mongodb.com/docs/manual/reference/operator/aggregation/indexStats/
 
-IndexStats = dict[Literal["$indexStats"], dict[str, Any]]
+IndexStatsSpec = dict[str, Any]
 
-def verify_index_stats(stage: IndexStats, version: str, pipeline_index: int) -> bool:
+IndexStats = TypedDict("IndexStats", {"$indexStats": IndexStatsSpec})
+
+def verify_index_stats(spec: IndexStatsSpec, version: str, pipeline_index: int) -> bool:
     # TODO implement verification logic (no options; stage shape is fixed)
     return True

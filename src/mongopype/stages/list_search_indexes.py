@@ -1,9 +1,11 @@
-from typing import Literal, Any
+from typing import Any, TypedDict
 
 # https://www.mongodb.com/docs/manual/reference/operator/aggregation/listSearchIndexes/
 
-ListSearchIndexes = dict[Literal["$listSearchIndexes"], dict[str, Any]]
+ListSearchIndexesSpec = dict[str, Any]
 
-def verify_list_search_indexes(stage: ListSearchIndexes, version: str, pipeline_index: int) -> bool:
+ListSearchIndexes = TypedDict("ListSearchIndexes", {"$listSearchIndexes": ListSearchIndexesSpec})
+
+def verify_list_search_indexes(spec: ListSearchIndexesSpec, version: str, pipeline_index: int) -> bool:
     # TODO implement verification logic (id/name constraints)
     return True

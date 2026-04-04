@@ -1,9 +1,11 @@
-from typing import Literal, Any
+from typing import Any, TypedDict
 
 # https://www.mongodb.com/docs/manual/reference/operator/aggregation/queryStats/
 
-QueryStats = dict[Literal["$queryStats"], dict[str, Any]]
+QueryStatsSpec = dict[str, Any]
 
-def verify_query_stats(stage: QueryStats, version: str, pipeline_index: int) -> bool:
+QueryStats = TypedDict("QueryStats", {"$queryStats": QueryStatsSpec})
+
+def verify_query_stats(spec: QueryStatsSpec, version: str, pipeline_index: int) -> bool:
     # TODO implement verification logic
     return True

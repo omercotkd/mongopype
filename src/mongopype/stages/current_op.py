@@ -1,9 +1,11 @@
-from typing import Literal, Any
+from typing import Any, TypedDict
 
 # https://www.mongodb.com/docs/manual/reference/operator/aggregation/currentOp/
 
-CurrentOp = dict[Literal["$currentOp"], dict[str, Any]]
+CurrentOpSpec = dict[str, Any]
 
-def verify_current_op(stage: CurrentOp, version: str, pipeline_index: int) -> bool:
+CurrentOp = TypedDict("CurrentOp", {"$currentOp": CurrentOpSpec})
+
+def verify_current_op(spec: CurrentOpSpec, version: str, pipeline_index: int) -> bool:
     # TODO implement verification logic (requires admin privileges)
     return True

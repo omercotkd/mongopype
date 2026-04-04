@@ -1,9 +1,11 @@
-from typing import Literal, Any
+from typing import Any, TypedDict
 
 # https://www.mongodb.com/docs/manual/reference/operator/aggregation/fill/
 
-Fill = dict[Literal["$fill"], dict[str, Any]]
+FillSpec = dict[str, Any]
 
-def verify_fill(stage: Fill, version: str, pipeline_index: int) -> bool:
+Fill = TypedDict("Fill", {"$fill": FillSpec})
+
+def verify_fill(spec: FillSpec, version: str, pipeline_index: int) -> bool:
     # TODO implement verification logic (method/value rules)
     return True

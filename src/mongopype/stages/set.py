@@ -1,10 +1,12 @@
-from typing import Literal
+from typing import TypedDict
 from ..types import Expression
 
 # https://www.mongodb.com/docs/manual/reference/operator/aggregation/set/
 
-Set = dict[Literal["$set"], dict[str, Expression]]
+SetSpec = dict[str, Expression]
 
-def verify_set(stage: Set, version: str, pipeline_index: int) -> bool:
+Set = TypedDict("Set", {"$set": SetSpec})
+
+def verify_set(spec: SetSpec, version: str, pipeline_index: int) -> bool:
     # TODO implement verification logic
     return True

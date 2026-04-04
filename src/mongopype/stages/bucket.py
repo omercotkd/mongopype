@@ -1,4 +1,4 @@
-from typing import Literal, TypedDict, Union, Any
+from typing import TypedDict, Union, Any
 from datetime import datetime
 from ..types import AccumulatorExpression, Expression
 
@@ -13,11 +13,8 @@ class BucketSpec(TypedDict):
     output: dict[str, AccumulatorExpression]
 
 
-Bucket = dict[
-    Literal["$bucket"],
-    BucketSpec,
-]
+Bucket = TypedDict("Bucket", {"$bucket": BucketSpec})
 
-def verify_bucket(stage: Bucket, version: str, pipeline_index: int) -> bool:
+def verify_bucket(spec: BucketSpec, version: str, pipeline_index: int) -> bool:
     # TODO implement verification logic
     return True

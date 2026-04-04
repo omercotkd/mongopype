@@ -1,10 +1,12 @@
-from typing import Literal
+from typing import TypedDict
 from ..types import Document
 
 # https://www.mongodb.com/docs/manual/reference/operator/aggregation/match/
 
-Match = dict[Literal["$match"], Document]
+MatchSpec = Document
 
-def verify_match(stage: Match, version: str, pipeline_index: int) -> bool:
+Match = TypedDict("Match", {"$match": MatchSpec})
+
+def verify_match(spec: MatchSpec, version: str, pipeline_index: int) -> bool:
     # TODO implement verification logic
     return True

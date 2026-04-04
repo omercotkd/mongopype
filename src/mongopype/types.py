@@ -3,7 +3,7 @@ from typing import Literal, Any, Optional, TypedDict, Union
 
 Stage = dict[str, Any]
 
-
+Version = tuple[int, int]  # major, minor
 
 # TODO expand these type
 Expression = Union[str, int, float, dict[str, Any], list[Any]]

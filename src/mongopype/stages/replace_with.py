@@ -1,10 +1,12 @@
-from typing import Literal
+from typing import TypedDict
 from ..types import Expression
 
 # https://www.mongodb.com/docs/manual/reference/operator/aggregation/replaceWith/
 
-ReplaceWith = dict[Literal["$replaceWith"], Expression]
+ReplaceWithSpec = Expression
 
-def verify_replace_with(stage: ReplaceWith, version: str, pipeline_index: int) -> bool:
+ReplaceWith = TypedDict("ReplaceWith", {"$replaceWith": ReplaceWithSpec})
+
+def verify_replace_with(spec: ReplaceWithSpec, version: str, pipeline_index: int) -> bool:
     # TODO implement verification logic
     return True

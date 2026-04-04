@@ -1,9 +1,11 @@
-from typing import Literal, Union
+from typing import Union, TypedDict
 
 # https://www.mongodb.com/docs/manual/reference/operator/aggregation/unset/
 
-Unset = dict[Literal["$unset"], Union[str, list[str]]]
+UnsetSpec = Union[str, list[str]]
 
-def verify_unset(stage: Unset, version: str, pipeline_index: int) -> bool:
+Unset = TypedDict("Unset", {"$unset": UnsetSpec})
+
+def verify_unset(spec: UnsetSpec, version: str, pipeline_index: int) -> bool:
     # TODO implement verification logic
     return True

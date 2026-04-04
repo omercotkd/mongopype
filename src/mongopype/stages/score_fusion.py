@@ -1,9 +1,11 @@
-from typing import Literal, Any
+from typing import Any, TypedDict
 
 # (Future) Placeholder for $scoreFusion stage if available
 
-ScoreFusion = dict[Literal["$scoreFusion"], dict[str, Any]]
+ScoreFusionSpec = dict[str, Any]
 
-def verify_score_fusion(stage: ScoreFusion, version: str, pipeline_index: int) -> bool:
+ScoreFusion = TypedDict("ScoreFusion", {"$scoreFusion": ScoreFusionSpec})
+
+def verify_score_fusion(spec: ScoreFusionSpec, version: str, pipeline_index: int) -> bool:
     # TODO implement verification logic
     return True

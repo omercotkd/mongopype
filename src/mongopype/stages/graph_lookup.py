@@ -1,9 +1,11 @@
-from typing import Literal, Any
+from typing import Any, TypedDict
 
 # https://www.mongodb.com/docs/manual/reference/operator/aggregation/graphLookup/
 
-GraphLookup = dict[Literal["$graphLookup"], dict[str, Any]]
+GraphLookupSpec = dict[str, Any]
 
-def verify_graph_lookup(stage: GraphLookup, version: str, pipeline_index: int) -> bool:
+GraphLookup = TypedDict("GraphLookup", {"$graphLookup": GraphLookupSpec})
+
+def verify_graph_lookup(spec: GraphLookupSpec, version: str, pipeline_index: int) -> bool:
     # TODO implement verification logic (required fields present)
     return True

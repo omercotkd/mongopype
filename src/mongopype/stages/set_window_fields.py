@@ -1,9 +1,11 @@
-from typing import Literal, Any
+from typing import Any, TypedDict
 
 # https://www.mongodb.com/docs/manual/reference/operator/aggregation/setWindowFields/
 
-SetWindowFields = dict[Literal["$setWindowFields"], dict[str, Any]]
+SetWindowFieldsSpec = dict[str, Any]
 
-def verify_set_window_fields(stage: SetWindowFields, version: str, pipeline_index: int) -> bool:
+SetWindowFields = TypedDict("SetWindowFields", {"$setWindowFields": SetWindowFieldsSpec})
+
+def verify_set_window_fields(spec: SetWindowFieldsSpec, version: str, pipeline_index: int) -> bool:
     # TODO implement verification logic (partitionBy, sortBy, output specs)
     return True

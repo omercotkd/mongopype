@@ -1,9 +1,11 @@
-from typing import Literal
+from typing import TypedDict
 
 # https://www.mongodb.com/docs/manual/reference/operator/aggregation/count/
 
-Count = dict[Literal["$count"], str]
+CountSpec = str
 
-def verify_count(stage: Count, version: str, pipeline_index: int) -> bool:
+Count = TypedDict("Count", {"$count": CountSpec})
+
+def verify_count(spec: CountSpec, version: str, pipeline_index: int) -> bool:
     # TODO implement verification logic (field name constraints)
     return True

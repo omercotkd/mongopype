@@ -1,9 +1,11 @@
-from typing import Literal
+from typing import TypedDict
 
 # https://www.mongodb.com/docs/manual/reference/operator/aggregation/limit/
 
-Limit = dict[Literal["$limit"], int]
+LimitSpec = int
 
-def verify_limit(stage: Limit, version: str, pipeline_index: int) -> bool:
+Limit = TypedDict("Limit", {"$limit": LimitSpec})
+
+def verify_limit(spec: LimitSpec, version: str, pipeline_index: int) -> bool:
     # TODO implement verification logic (non-negative check)
     return True

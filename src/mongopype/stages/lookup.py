@@ -1,9 +1,11 @@
-from typing import Literal, Any
+from typing import Any, TypedDict
 
 # https://www.mongodb.com/docs/manual/reference/operator/aggregation/lookup/
 
-Lookup = dict[Literal["$lookup"], dict[str, Any]]
+LookupSpec = dict[str, Any]
 
-def verify_lookup(stage: Lookup, version: str, pipeline_index: int) -> bool:
+Lookup = TypedDict("Lookup", {"$lookup": LookupSpec})
+
+def verify_lookup(spec: LookupSpec, version: str, pipeline_index: int) -> bool:
     # TODO implement verification logic (from, as, either local/foreign or pipeline with let)
     return True

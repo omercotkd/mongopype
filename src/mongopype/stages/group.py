@@ -1,10 +1,12 @@
-from typing import Literal, Union
+from typing import Union, TypedDict
 from ..types import Expression, AccumulatorExpression
 
 # https://www.mongodb.com/docs/manual/reference/operator/aggregation/group/
 
-Group = dict[Literal["$group"], dict[str, Union[Expression, AccumulatorExpression]]]
+GroupSpec = dict[str, Union[Expression, AccumulatorExpression]]
 
-def verify_group(stage: Group, version: str, pipeline_index: int) -> bool:
+Group = TypedDict("Group", {"$group": GroupSpec})
+
+def verify_group(spec: GroupSpec, version: str, pipeline_index: int) -> bool:
     # TODO implement verification logic (_id required, accumulator forms)
     return True

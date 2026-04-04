@@ -19,14 +19,14 @@ Granularity = Literal[
     "POWERSOF2",
 ]
 
-class BucketAutoSpec(TypedDict, total=False):
+class BucketAutoSpec(TypedDict, total=True):
     groupBy: Expression
     buckets: int
     output: dict[str, AccumulatorExpression]
     granularity: Granularity
 
-BucketAuto = dict[Literal["$bucketAuto"], BucketAutoSpec]
+BucketAuto = TypedDict("BucketAuto", {"$bucketAuto": BucketAutoSpec})
 
-def verify_bucket_auto(stage: BucketAuto, version: str, pipeline_index: int) -> bool:
+def verify_bucket_auto(spec: BucketAutoSpec, version: str, pipeline_index: int) -> bool:
     # TODO implement verification logic (buckets > 1, boundaries ordering, granularity valid for version)
     return True

@@ -1,9 +1,11 @@
-from typing import Literal, Any
+from typing import Any, TypedDict
 
 # https://www.mongodb.com/docs/manual/reference/operator/aggregation/merge/
 
-Merge = dict[Literal["$merge"], dict[str, Any]]
+MergeSpec = dict[str, Any]
 
-def verify_merge(stage: Merge, version: str, pipeline_index: int) -> bool:
+Merge = TypedDict("Merge", {"$merge": MergeSpec})
+
+def verify_merge(spec: MergeSpec, version: str, pipeline_index: int) -> bool:
     # TODO implement verification logic (into required; on optional; version-specific rules)
     return True

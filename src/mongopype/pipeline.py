@@ -1,5 +1,5 @@
 from typing import Union, Any
-from .stages.add_fields import AddFields, verify_add_fields
+from .stages.add_fields import AddFields
 from .stages.bucket import Bucket, verify_bucket
 from .stages.bucket_auto import BucketAuto, verify_bucket_auto
 from .stages.change_stream import ChangeStream, verify_change_stream
@@ -120,9 +120,8 @@ PipelineHint = Union[
     VectorSearch,
 ]
 
-
 __MAPPING__: Any = {
-    "$addFields": verify_add_fields,
+    # "$addFields": verify_add_fields,
     "$bucket": verify_bucket,
     "$bucketAuto": verify_bucket_auto,
     "$changeStream": verify_change_stream,
@@ -174,6 +173,7 @@ __MAPPING__: Any = {
 }
 
 class Pipeline(list[PipelineHint]):
+    
     def verify(self, version: str) -> bool:
         for index, stage in enumerate(self):
             stage_key = next(iter(stage))

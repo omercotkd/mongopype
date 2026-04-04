@@ -1,9 +1,11 @@
-from typing import Literal, Any
+from typing import Any, TypedDict
 
 # https://www.mongodb.com/docs/manual/reference/operator/aggregation/changeStreamSplitLargeEvent/
 
-ChangeStreamSplitLargeEvent = dict[Literal["$changeStreamSplitLargeEvent"], dict[str, Any]]
+ChangeStreamSplitLargeEventSpec = dict[str, Any]
 
-def verify_change_stream_split_large_event(stage: ChangeStreamSplitLargeEvent, version: str, pipeline_index: int) -> bool:
+ChangeStreamSplitLargeEvent = TypedDict("ChangeStreamSplitLargeEvent", {"$changeStreamSplitLargeEvent": ChangeStreamSplitLargeEventSpec})
+
+def verify_change_stream_split_large_event(spec: ChangeStreamSplitLargeEventSpec, version: str, pipeline_index: int) -> bool:
     # TODO implement verification logic (ordering: must follow $changeStream)
     return True
