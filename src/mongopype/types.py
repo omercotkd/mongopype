@@ -1,14 +1,16 @@
-from typing import Literal, Any, Optional, TypedDict, Union
+from typing import Callable, Literal, Any, Optional, TypedDict, Union
 
-
-Stage = dict[str, Any]
 
 Version = tuple[int, int]  # major, minor
+
+ValidationFunction = Callable[[Any, Version, int], tuple[bool, list[str]]]
 
 # TODO expand these type
 Expression = Union[str, int, float, dict[str, Any], list[Any]]
 
-Document = dict[str, Any]
+BSON = Union[str, int, float, bool, None, dict[str, "BSON"], list["BSON"]]
+
+Document = dict[str, BSON]
 
 Stages = Literal[
     "$addFields",

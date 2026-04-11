@@ -1,16 +1,20 @@
-from typing import Literal, TypedDict
-from ..types import Expression
+# Done
 
-# https://www.mongodb.com/docs/manual/reference/operator/aggregation/addFields/
+from typing import TypedDict, Literal
+from ..types import Document, Version
 
-# AddFields = dict[Literal["$addFields"], dict[str, Expression]]
-
-AddFieldsSpec = dict[str, Expression]
+AddFieldsSpec = Document
 
 AddFields = TypedDict("AddFields", {"$addFields": AddFieldsSpec})
+"""
+$addFields stage:
+https://www.mongodb.com/docs/manual/reference/operator/aggregation/addFields/
+"""
 
 
-def verify_add_fields(spec: AddFieldsSpec, version: str, pipeline_index: int) -> bool:
-    # TODO implement verification logic
-    return True
-
+def verify_add_fields(
+    spec: AddFieldsSpec, version: Version, pipeline_index: int
+) -> tuple[Literal[True], list[str]]:
+    # As long as the pylance is happy with the spec type, this is a valid stage.
+    # Add fields can be in any position in the pipeline.
+    return True, []

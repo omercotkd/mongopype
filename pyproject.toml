@@ -5,7 +5,7 @@ build-backend = "uv_build"
 [project]
 name = "mongopype"
 version = "0.0.1"
-authors = [{ name = "Omer Cohen", email = "omercotkd@gmail.com" }]
+authors = [{ name = "Omer Cohen", email = "omercotkd+mongopype@gmail.com" }]
 description = "Pythonic builder for MongoDB aggregation pipelines"
 readme = "README.md"
 requires-python = ">=3.10"
