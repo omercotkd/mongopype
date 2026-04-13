@@ -3,9 +3,8 @@ from typing import Callable, Literal, Any, Optional, TypedDict, Union
 
 Version = tuple[int, int]  # major, minor
 
-ValidationFunction = Callable[[Any, Version, int], tuple[bool, list[str]]]
+ValidationFunction = Callable[[Any, Version, int, int, bool], tuple[bool, list[str]]]
 
-# TODO expand these type
 Expression = Union[str, int, float, dict[str, Any], list[Any]]
 
 BSON = Union[str, int, float, bool, None, dict[str, "BSON"], list["BSON"]]
@@ -157,3 +156,11 @@ class OutputIntoTimeSeries(OutputInto):
     bucketMaxSpanSeconds: Optional[int]
     #  ver 6.3 and later must be eq to bucketMaxSpanSeconds
     bucketRoundingSeconds: Optional[int]
+
+
+SortOrder = dict[str, Union[Literal[1, -1], dict[Literal["$meta"], Literal["textScore"]]]]
+
+
+class UserDocument(TypedDict):
+    user: str
+    db: str

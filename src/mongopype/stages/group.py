@@ -1,12 +1,29 @@
+# Done
+
 from typing import Union, TypedDict
-from ..types import Expression, AccumulatorExpression
+from ..types import Expression, AccumulatorExpression, Version
 
 # https://www.mongodb.com/docs/manual/reference/operator/aggregation/group/
 
 GroupSpec = dict[str, Union[Expression, AccumulatorExpression]]
 
 Group = TypedDict("Group", {"$group": GroupSpec})
+"""
+$group stage:
+https://www.mongodb.com/docs/manual/reference/operator/aggregation/group/
+"""
 
-def verify_group(spec: GroupSpec, version: str, pipeline_index: int) -> bool:
-    # TODO implement verification logic (_id required, accumulator forms)
-    return True
+
+def verify_group(
+    spec: GroupSpec, version: Version, pipeline_index: int, pipeline_length: int, is_atlas: bool
+) -> tuple[bool, list[str]]:
+
+    errors = []
+
+    if "_id" not in spec:
+        errors.append("$group requires an '_id' field.")
+
+    if errors:
+        return False, errors
+
+    return True, []

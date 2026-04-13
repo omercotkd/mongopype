@@ -1,12 +1,29 @@
+# Done
+
 from typing import TypedDict
-from ..types import Expression
+from ..types import Expression, Version
 
 # https://www.mongodb.com/docs/manual/reference/operator/aggregation/sortByCount/
 
 SortByCountSpec = Expression
 
 SortByCount = TypedDict("SortByCount", {"$sortByCount": SortByCountSpec})
+"""
+$sortByCount stage:
+https://www.mongodb.com/docs/manual/reference/operator/aggregation/sortByCount/
+"""
 
-def verify_sort_by_count(spec: SortByCountSpec, version: str, pipeline_index: int) -> bool:
-    # TODO implement verification logic (expression validity)
-    return True
+
+def verify_sort_by_count(
+    spec: SortByCountSpec, version: Version, pipeline_index: int, pipeline_length: int, is_atlas: bool
+) -> tuple[bool, list[str]]:
+
+    errors = []
+
+    if isinstance(spec, str) and not spec.startswith("$"):
+        errors.append(f"$sortByCount expression string must start with '$', got '{spec}'.")
+
+    if errors:
+        return False, errors
+
+    return True, []

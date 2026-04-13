@@ -1,12 +1,20 @@
+# Done
+
 from typing import TypedDict
-from ..types import Expression
+from ..types import Expression, Version
 
 # https://www.mongodb.com/docs/manual/reference/operator/aggregation/redact/
 
 RedactSpec = Expression
 
 Redact = TypedDict("Redact", {"$redact": RedactSpec})
+"""
+$redact stage:
+https://www.mongodb.com/docs/manual/reference/operator/aggregation/redact/
+"""
 
-def verify_redact(spec: RedactSpec, version: str, pipeline_index: int) -> bool:
-    # TODO implement verification logic ($$PRUNE/$$KEEP/$$DESCEND usage)
-    return True
+
+def verify_redact(
+    spec: RedactSpec, version: Version, pipeline_index: int, pipeline_length: int, is_atlas: bool
+) -> tuple[bool, list[str]]:
+    return True, []

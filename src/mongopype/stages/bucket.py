@@ -23,7 +23,7 @@ https://www.mongodb.com/docs/manual/reference/operator/aggregation/bucket/
 
 
 def verify_bucket(
-    spec: BucketSpec, version: Version, pipeline_index: int
+    spec: BucketSpec, version: Version, pipeline_index: int, pipeline_length: int, is_atlas: bool
 ) -> tuple[bool, list[str]]:
 
     errors = []

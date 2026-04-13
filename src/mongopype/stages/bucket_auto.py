@@ -33,7 +33,7 @@ https://www.mongodb.com/docs/manual/reference/operator/aggregation/bucketAuto/
 
 
 def verify_bucket_auto(
-    spec: BucketAutoSpec, version: Version, pipeline_index: int
+    spec: BucketAutoSpec, version: Version, pipeline_index: int, pipeline_length: int, is_atlas: bool
 ) -> tuple[bool, list[str]]:
 
     errors = []

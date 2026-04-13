@@ -126,61 +126,69 @@ __MAPPING__: dict[str, ValidationFunction] = {
     "$addFields": verify_add_fields,
     "$bucket": verify_bucket,
     "$bucketAuto": verify_bucket_auto,
-    # "$changeStream": verify_change_stream,
-    # "$changeStreamSplitLargeEvent": verify_change_stream_split_large_event,
-    # "$collStats": verify_coll_stats,
-    # "$count": verify_count,
-    # "$currentOp": verify_current_op,
-    # "$densify": verify_densify,
-    # "$documents": verify_documents,
-    # "$facet": verify_facet,
-    # "$fill": verify_fill,
-    # "$geoNear": verify_geo_near,
-    # "$graphLookup": verify_graph_lookup,
-    # "$group": verify_group,
-    # "$indexStats": verify_index_stats,
-    # "$limit": verify_limit,
-    # "$listClusterCatalog": verify_list_cluster_catalog,
-    # "$listLocalSessions": verify_list_local_sessions,
-    # "$listSampledQueries": verify_list_sampled_queries,
-    # "$listSearchIndexes": verify_list_search_indexes,
-    # "$listSessions": verify_list_sessions,
-    # "$lookup": verify_lookup,
-    # "$match": verify_match,
-    # "$merge": verify_merge,
-    # "$out": verify_out,
-    # "$planCacheStats": verify_plan_cache_stats,
-    # "$project": verify_project,
-    # "$querySettings": verify_query_settings,
-    # "$queryStats": verify_query_stats,
-    # "$rankFusion": verify_rank_fusion,
-    # "$redact": verify_redact,
-    # "$replaceRoot": verify_replace_root,
-    # "$replaceWith": verify_replace_with,
-    # "$sample": verify_sample,
-    # "$score": verify_score,
-    # "$scoreFusion": verify_score_fusion,
-    # "$search": verify_search,
-    # "$searchMeta": verify_search_meta,
-    # "$set": verify_set,
-    # "$setWindowFields": verify_set_window_fields,
-    # "$shardedDataDistribution": verify_sharded_data_distribution,
-    # "$skip": verify_skip,
-    # "$sort": verify_sort,
-    # "$sortByCount": verify_sort_by_count,
-    # "$unionWith": verify_union_with,
-    # "$unset": verify_unset,
-    # "$unwind": verify_unwind,
-    # "$vectorSearch": verify_vector_search,
+    "$changeStream": verify_change_stream,
+    "$changeStreamSplitLargeEvent": verify_change_stream_split_large_event,
+    "$collStats": verify_coll_stats,
+    "$count": verify_count,
+    "$currentOp": verify_current_op,
+    "$densify": verify_densify,
+    "$documents": verify_documents,
+    "$facet": verify_facet,
+    "$fill": verify_fill,
+    "$geoNear": verify_geo_near,
+    "$graphLookup": verify_graph_lookup,
+    "$group": verify_group,
+    "$indexStats": verify_index_stats,
+    "$limit": verify_limit,
+    "$listClusterCatalog": verify_list_cluster_catalog,
+    "$listLocalSessions": verify_list_local_sessions,
+    "$listSampledQueries": verify_list_sampled_queries,
+    "$listSearchIndexes": verify_list_search_indexes,
+    "$listSessions": verify_list_sessions,
+    "$lookup": verify_lookup,
+    "$match": verify_match,
+    "$merge": verify_merge,
+    "$out": verify_out,
+    "$planCacheStats": verify_plan_cache_stats,
+    "$project": verify_project,
+    "$querySettings": verify_query_settings,
+    "$queryStats": verify_query_stats,
+    "$rankFusion": verify_rank_fusion,
+    "$redact": verify_redact,
+    "$replaceRoot": verify_replace_root,
+    "$replaceWith": verify_replace_with,
+    "$sample": verify_sample,
+    "$score": verify_score,
+    "$scoreFusion": verify_score_fusion,
+    "$search": verify_search,
+    "$searchMeta": verify_search_meta,
+    "$set": verify_set,
+    "$setWindowFields": verify_set_window_fields,
+    "$shardedDataDistribution": verify_sharded_data_distribution,
+    "$skip": verify_skip,
+    "$sort": verify_sort,
+    "$sortByCount": verify_sort_by_count,
+    "$unionWith": verify_union_with,
+    "$unset": verify_unset,
+    "$unwind": verify_unwind,
+    "$vectorSearch": verify_vector_search,
 }
 
+
 class Pipeline(list[PipelineHint]):
-    
-    def verify(self, version: Version) -> bool:
+
+    def verify(self, version: Version, is_atlas: bool = False) -> tuple[bool, list[str]]:
+        all_errors = []
+        pipeline_length = len(self)
         for index, stage in enumerate(self):
             stage_key = next(iter(stage))
             verify_function = __MAPPING__.get(stage_key)
             if verify_function:
-                if not verify_function(stage, version, index):
-                    return False
-        return True
+                valid, errors = verify_function(
+                    stage[stage_key], version, index, pipeline_length, is_atlas
+                )
+                if not valid:
+                    all_errors.append((f"Stage {index} ({stage_key}):", errors))
+        if all_errors:
+            return False, all_errors
+        return True, []

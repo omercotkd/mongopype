@@ -1,12 +1,32 @@
-from typing import TypedDict
-from ..types import Document
+# Done
+
+from typing import Union, TypedDict
+from ..types import Document, Expression, Version
 
 # https://www.mongodb.com/docs/manual/reference/operator/aggregation/documents/
 
-DocumentsSpec = list[Document]
+DocumentsSpec = Union[list[Document], Expression]
 
 Documents = TypedDict("Documents", {"$documents": DocumentsSpec})
+"""
+$documents stage:
+https://www.mongodb.com/docs/manual/reference/operator/aggregation/documents/
+"""
 
-def verify_documents(spec: DocumentsSpec, version: str, pipeline_index: int) -> bool:
-    # TODO implement verification logic (must be first in unionWith sub-pipeline in some cases)
-    return True
+
+def verify_documents(
+    spec: DocumentsSpec, version: Version, pipeline_index: int, pipeline_length: int, is_atlas: bool
+) -> tuple[bool, list[str]]:
+
+    errors = []
+
+    if version < (6, 0):
+        errors.append("$documents requires MongoDB >= 6.0.")
+
+    if pipeline_index != 0:
+        errors.append("$documents must be the first stage in the pipeline.")
+
+    if errors:
+        return False, errors
+
+    return True, []
