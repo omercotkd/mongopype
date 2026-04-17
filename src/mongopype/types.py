@@ -66,43 +66,43 @@ Stage = Literal[
 
 # https://www.mongodb.com/docs/manual/reference/mql/accumulators/
 Accumulator = Literal[
-    # TODO make sure not used in mongo ver >= 8
+    # ver <= 8
     "$accumulator",
     "$addToSet",
     "$avg",
-    # TODO mongo ver >= 5.2
+    # ver >= 5.2
     "$bottom",
-    # TODO mongo ver >= 5.2
+    # ver >= 5.2
     "$bottomN",
-    # TODO mongo ver >= 8.1
+    # ver >= 8.1
     "$concatArrays",
-    # TODO mongo ver >= 5.0
+    # ver >= 5.0
     "$count",
     "$first",
-    # TODO mongo ver >= 5.2
+    # ver >= 5.2
     "$firstN",
     "$last",
-    # TODO mongo ver >= 5.2
+    # ver >= 5.2
     "$lastN",
     "$max",
-    # TODO mongo ver >= 5.2
+    # ver >= 5.2
     "$maxN",
-    # TODO mongo ver >= 7.0
+    # ver >= 7.0
     "$median",
     "$mergeObjects",
     "$min",
-    # TODO mongo ver >= 5.2
+    # ver >= 5.2
     "$minN",
-    # TODO mongo ver >= 7.0
+    # ver >= 7.0
     "$percentile",
     "$push",
-    # TODO mongo ver >= 8.1
+    # ver >= 8.1
     "$setUnion",
     "$stdDevPop",
     "$stdDevSamp",
     "$sum",
     "$top",
-    # TODO mongo ver >= 5.2
+    # ver >= 5.2
     "$topN",
 ]
 

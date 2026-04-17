@@ -1,6 +1,7 @@
 from typing import TypedDict, Union, Optional
 from datetime import datetime
 from ..types import AccumulatorExpression, Expression, Version
+from ..verify import verify_accumulator_expression
 
 
 class BucketSpec(TypedDict):
@@ -27,10 +28,9 @@ def verify_bucket(
     errors: list[str] = []
 
     for key, value in spec["output"].items():
-        if not len(value) == 1:
-            errors.append(
-                f"Invalid output specification for field '{key}': {value}. Must contain exactly one accumulator expression."
-            )
+        is_valid, error = verify_accumulator_expression(value, version)
+        if not is_valid:
+            errors.append(f"Invalid output specification for field '{key}': {error}")
 
     for i in range(len(spec["boundaries"]) - 1):
         if spec["boundaries"][i] >= spec["boundaries"][i + 1]:  # type: ignore

@@ -1,6 +1,6 @@
 from typing import Literal, TypedDict
 from ..types import Expression, AccumulatorExpression, Version
-
+from ..verify import verify_accumulator_expression
 
 class BucketAutoSpec(TypedDict, total=True):
     groupBy: Expression
@@ -47,10 +47,10 @@ def verify_bucket_auto(
         )
 
     for key, value in spec["output"].items():
-        if not len(value) == 1:
-            errors.append(
-                f"Invalid output specification for field '{key}': {value}. Must contain exactly one accumulator expression."
-            )
+        is_valid, error = verify_accumulator_expression(value, version)
+        if not is_valid:
+            errors.append(f"Invalid output specification for field '{key}': {error}")
+
 
     if errors:
         return False, errors
