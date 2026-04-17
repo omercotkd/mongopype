@@ -7,7 +7,7 @@ class GeoJSONPoint(TypedDict):
     coordinates: list[float]
 
 
-class GeoNearSpec(TypedDict, total=False):
+class GeoNearSpec(TypedDict):
     near: Union[GeoJSONPoint, list[float]]
     distanceField: str
     distanceMultiplier: float

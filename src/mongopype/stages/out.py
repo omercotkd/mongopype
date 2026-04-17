@@ -23,11 +23,11 @@ def verify_out(
     if isinstance(spec, str):
         if not spec:
             errors.append("$out collection name must not be empty.")
-
-    if "db" not in spec or "coll" not in spec:
-        errors.append("$out document form requires 'db' and 'coll' fields.")
-    if "timeseries" in spec and version < (7, 0):
-        errors.append("$out with 'timeseries' requires MongoDB >= 7.0.")
+    else:
+        if "db" not in spec or "coll" not in spec:
+            errors.append("$out document form requires 'db' and 'coll' fields.")
+        if "timeseries" in spec and version < (7, 0):
+            errors.append("$out with 'timeseries' requires MongoDB >= 7.0.")
 
     if errors:
         return False, errors

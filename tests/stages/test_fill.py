@@ -1,25 +1,25 @@
 """Tests for $fill stage."""
-from tests.conftest import V_53, V_OLD
-from mongopype.stages.fill import verify_fill
+from tests.conftest import V_53
+from mongopype.stages.fill import verify_fill, FillSpec
 
 
 def test_fill_valid_value_output():
-    spec = {"output": {"score": {"value": 0}}}
+    spec: FillSpec = {"output": {"score": {"value": 0}}}
     valid, errors = verify_fill(spec, V_53, pipeline_index=0, pipeline_length=1, is_atlas=False)
     assert valid is True
     assert errors == []
 
 
 def test_fill_below_53_fails():
-    spec = {"output": {"score": {"value": 0}}}
+    spec: FillSpec = {"output": {"score": {"value": 0}}}
     valid, errors = verify_fill(spec, (5, 2), pipeline_index=0, pipeline_length=1, is_atlas=False)
     assert valid is False
     assert any("5.3" in e for e in errors)
 
 
 def test_fill_at_53_ok():
-    spec = {"output": {"score": {"value": 0}}}
-    valid, errors = verify_fill(spec, V_53, pipeline_index=0, pipeline_length=1, is_atlas=False)
+    spec: FillSpec = {"output": {"score": {"value": 0}}}
+    valid, _ = verify_fill(spec, V_53, pipeline_index=0, pipeline_length=1, is_atlas=False)
     assert valid is True
 
 

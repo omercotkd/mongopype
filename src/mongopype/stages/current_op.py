@@ -1,13 +1,13 @@
-from typing import TypedDict
+from typing import TypedDict, NotRequired
 from ..types import Version
 
 class CurrentOpSpec(TypedDict, total=False):
-    allUsers: bool
-    idleConnections: bool
-    idleCursors: bool
-    idleSessions: bool
-    localOps: bool
-    targetAllNodes: bool
+    allUsers: NotRequired[bool]
+    idleConnections: NotRequired[bool]
+    idleCursors: NotRequired[bool]
+    idleSessions: NotRequired[bool]
+    localOps: NotRequired[bool]
+    targetAllNodes: NotRequired[bool]
 
 
 CurrentOp = TypedDict("CurrentOp", {"$currentOp": CurrentOpSpec})

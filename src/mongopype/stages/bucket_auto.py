@@ -1,12 +1,12 @@
-from typing import Literal, TypedDict
+from typing import Literal, TypedDict, NotRequired
 from ..types import Expression, AccumulatorExpression, Version
 from ..verify import verify_accumulator_expression
 
 class BucketAutoSpec(TypedDict, total=True):
     groupBy: Expression
     buckets: int
-    output: dict[str, AccumulatorExpression]
-    granularity: Literal[
+    output: NotRequired[dict[str, AccumulatorExpression]]
+    granularity: NotRequired[Literal[
         "R5",
         "R10",
         "R20",
@@ -20,7 +20,7 @@ class BucketAutoSpec(TypedDict, total=True):
         "E96",
         "E192",
         "POWERSOF2",
-    ]
+    ]]
 
 
 BucketAuto = TypedDict("BucketAuto", {"$bucketAuto": BucketAutoSpec})
@@ -46,10 +46,11 @@ def verify_bucket_auto(
             f"Invalid 'buckets' value: {spec['buckets']}. Must be a positive 32-bit integer."
         )
 
-    for key, value in spec["output"].items():
-        is_valid, error = verify_accumulator_expression(value, version)
-        if not is_valid:
-            errors.append(f"Invalid output specification for field '{key}': {error}")
+    if "output" in spec:
+        for key, value in spec["output"].items():
+            is_valid, error = verify_accumulator_expression(value, version)
+            if not is_valid:
+                errors.append(f"Invalid output specification for field '{key}': {error}")
 
 
     if errors:

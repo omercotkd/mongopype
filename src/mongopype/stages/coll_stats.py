@@ -1,4 +1,4 @@
-from typing import TypedDict
+from typing import TypedDict, NotRequired
 from ..types import Version
 
 
@@ -11,10 +11,10 @@ class StorageStatsOptions(TypedDict, total=False):
 
 
 class CollStatsSpec(TypedDict, total=False):
-    latencyStats: LatencyStatsOptions
-    storageStats: StorageStatsOptions
-    count: dict[str, object]
-    queryExecStats: dict[str, object]
+    latencyStats: NotRequired[LatencyStatsOptions]
+    storageStats: NotRequired[StorageStatsOptions]
+    count: NotRequired[dict[str, object]]
+    queryExecStats: NotRequired[dict[str, object]]
 
 
 CollStats = TypedDict("CollStats", {"$collStats": CollStatsSpec})

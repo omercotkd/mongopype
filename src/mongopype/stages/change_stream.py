@@ -1,19 +1,26 @@
-from typing import TypedDict, Any
+from typing import TypedDict, Any, NotRequired, Literal
 from ..types import (
-    ChaneStreamFullDocumentOptions,
-    ChaneStreamFullDocumentBeforeChangeOptions,
     Version,
 )
 
 
 class ChangeStreamSpec(TypedDict, total=False):
-    allChangesForCluster: bool
-    fullDocument: ChaneStreamFullDocumentOptions
-    fullDocumentBeforeChange: ChaneStreamFullDocumentBeforeChangeOptions
-    resumeAfter: dict[str, Any]
-    showExpandedEvents: bool
-    startAfter: dict[str, Any]
-    startAtOperationTime: Any
+    allChangesForCluster: NotRequired[bool]
+    fullDocument: NotRequired[Literal[
+        "default",
+        "required",
+        "updateLookup",
+        "whenAvailable",
+    ]]
+    fullDocumentBeforeChange: NotRequired[Literal[
+        "off",
+        "whenAvailable",
+        "required",
+    ]]
+    resumeAfter: NotRequired[dict[str, Any]]
+    showExpandedEvents: NotRequired[bool]
+    startAfter: NotRequired[dict[str, Any]]
+    startAtOperationTime: NotRequired[Any]
 
 
 ChangeStream = TypedDict("ChangeStream", {"$changeStream": ChangeStreamSpec})

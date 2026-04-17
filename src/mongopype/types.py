@@ -108,37 +108,6 @@ Accumulator = Literal[
 
 AccumulatorExpression = dict[Accumulator, Expression]
 
-ChaneStreamFullDocumentOptions = Literal[
-    "default",
-    "required",
-    "updateLookup",
-    "whenAvailable",
-]
-
-ChaneStreamFullDocumentBeforeChangeOptions = Literal[
-    "off",
-    "whenAvailable",
-    "required",
-]
-
-TimeUnits = Literal[
-    "millisecond",
-    "second",
-    "minute",
-    "hour",
-    "day",
-    "week",
-    "month",
-    "quarter",
-    "year",
-]
-
-
-class DensifyRange(TypedDict):
-    bounds: Union[Literal["full", "partition"], tuple[Any, Any]]
-    step: Union[int, float]
-    unit: Optional[TimeUnits]
-
 
 class OutputInto(TypedDict):
     db: str

@@ -1,4 +1,4 @@
-from typing import Literal, TypedDict, Union
+from typing import Literal, TypedDict, Union, NotRequired
 from ..types import Version, Expression, SortOrder
 
 class FillOutputValueField(TypedDict):
@@ -12,10 +12,10 @@ class FillOutputMethodField(TypedDict):
 FillOutputField = Union[FillOutputValueField, FillOutputMethodField]
 
 
-class FillSpec(TypedDict, total=False):
-    partitionBy: Expression
-    partitionByFields: list[str]
-    sortBy: SortOrder
+class FillSpec(TypedDict):
+    partitionBy: NotRequired[Expression]
+    partitionByFields: NotRequired[list[str]]
+    sortBy: NotRequired[SortOrder]
     output: dict[str, FillOutputField]
 
 
@@ -41,13 +41,13 @@ def verify_fill(
     if "partitionBy" in spec and "partitionByFields" in spec:
         errors.append("$fill cannot specify both 'partitionBy' and 'partitionByFields'.")
 
-    if "output" in spec:
-        for field_name, field_spec in spec["output"].items():
-            has_method = "method" in field_spec
-            if has_method and "sortBy" not in spec:
-                errors.append(
-                    f"$fill output field '{field_name}' uses 'method' but no 'sortBy' is specified."
-                )
+
+    for field_name, field_spec in spec["output"].items():
+        has_method = "method" in field_spec
+        if has_method and "sortBy" not in spec:
+            errors.append(
+                f"$fill output field '{field_name}' uses 'method' but no 'sortBy' is specified."
+            )
 
     if errors:
         return False, errors

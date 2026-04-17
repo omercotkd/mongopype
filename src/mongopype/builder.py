@@ -1,7 +1,6 @@
-from typing import Union, Unpack, Literal
+from typing import Union, Unpack, Literal, Any
 from . import types as mongopype_types
 from .pipeline import Pipeline, PipelineHint
-from .stages.add_fields import AddFieldsSpec
 from .stages.bucket import BucketSpec
 from .stages.bucket_auto import BucketAutoSpec
 from .stages.change_stream import ChangeStreamSpec
@@ -12,17 +11,14 @@ from .stages.documents import DocumentsSpec
 from .stages.fill import FillSpec
 from .stages.geo_near import GeoNearSpec
 from .stages.graph_lookup import GraphLookupSpec, GraphLookupKwargsSpec
-from .stages.group import GroupSpec
 from .stages.list_cluster_catalog import ListClusterCatalogSpec
 from .stages.list_local_sessions import ListLocalSessionsKwargsSpec
 from .stages.list_sampled_queries import ListSampledQueriesSpec
 from .stages.list_search_indexes import ListSearchIndexesSpec
 from .stages.list_sessions import ListSessionsKwargsSpec
 from .stages.lookup import LookupKwargsSpec, LookupSpec
-from .stages.match import MatchSpec
 from .stages.merge import MergeDocSpec
 from .stages.plan_cache_stats import PlanCacheStatsSpec
-from .stages.project import ProjectSpec
 from .stages.query_settings import QuerySettingsSpec
 from .stages.query_stats import QueryStatsSpec
 from .stages.rank_fusion import RankFusionSpec
@@ -30,9 +26,6 @@ from .stages.replace_root import ReplaceRootSpec
 from .stages.sample import SampleSpec
 from .stages.score import ScoreSpec
 from .stages.score_fusion import ScoreFusionSpec
-from .stages.search import SearchSpec
-from .stages.search_meta import SearchMetaSpec
-from .stages.set import SetSpec
 from .stages.set_window_fields import SetWindowFieldsSpec
 from .stages.union_with import UnionWithFullSpec
 from .stages.unwind import UnwindDocSpec
@@ -51,8 +44,8 @@ class PipelineBuilder:
         return self
 
     # STAGES
-    def add_fields(self, **kwargs: AddFieldsSpec) -> "PipelineBuilder":
-        return self.add_stage({"$addFields": {**kwargs}})
+    def add_fields(self, **kwargs: Any) -> "PipelineBuilder":
+        return self.add_stage({"$addFields": kwargs})
 
     def bucket(
         self,
@@ -114,8 +107,13 @@ class PipelineBuilder:
             spec["as"] = kwargs.pop("as_")
         return self.add_stage({"$graphLookup": spec})
 
-    def group(self, **kwargs: GroupSpec) -> "PipelineBuilder":
-        return self.add_stage({"$group": {**kwargs}})
+    def group(
+        self,
+        **kwargs: Union[
+            mongopype_types.Expression, mongopype_types.AccumulatorExpression
+        ],
+    ) -> "PipelineBuilder":
+        return self.add_stage({"$group": kwargs})
 
     def index_stats(self) -> "PipelineBuilder":
         return self.add_stage({"$indexStats": {}})
@@ -157,8 +155,8 @@ class PipelineBuilder:
 
         return self.add_stage({"$lookup": spec})
 
-    def match(self, **kwargs: MatchSpec) -> "PipelineBuilder":
-        return self.add_stage({"$match": {**kwargs}})
+    def match(self, **kwargs: mongopype_types.BSON) -> "PipelineBuilder":
+        return self.add_stage({"$match": kwargs})
 
     def merge(self, **kwargs: Unpack[MergeDocSpec]) -> "PipelineBuilder":
         return self.add_stage({"$merge": kwargs})
@@ -176,8 +174,8 @@ class PipelineBuilder:
     ) -> "PipelineBuilder":
         return self.add_stage({"$planCacheStats": kwargs})
 
-    def project(self, **kwargs: ProjectSpec) -> "PipelineBuilder":
-        return self.add_stage({"$project": {**kwargs}})
+    def project(self, **kwargs: Any) -> "PipelineBuilder":
+        return self.add_stage({"$project": kwargs})
 
     def query_settings(self, **kwargs: Unpack[QuerySettingsSpec]) -> "PipelineBuilder":
         return self.add_stage({"$querySettings": kwargs})
@@ -206,14 +204,14 @@ class PipelineBuilder:
     def score_fusion(self, **kwargs: Unpack[ScoreFusionSpec]) -> "PipelineBuilder":
         return self.add_stage({"$scoreFusion": kwargs})
 
-    def search(self, **kwargs: SearchSpec) -> "PipelineBuilder":
-        return self.add_stage({"$search": {**kwargs}})
+    def search(self, **kwargs: Any) -> "PipelineBuilder":
+        return self.add_stage({"$search": kwargs})
 
-    def search_meta(self, **kwargs: SearchMetaSpec) -> "PipelineBuilder":
-        return self.add_stage({"$searchMeta": {**kwargs}})
+    def search_meta(self, **kwargs: Any) -> "PipelineBuilder":
+        return self.add_stage({"$searchMeta": kwargs})
 
-    def set(self, **kwargs: SetSpec) -> "PipelineBuilder":
-        return self.add_stage({"$set": {**kwargs}})
+    def set(self, **kwargs: mongopype_types.Expression) -> "PipelineBuilder":
+        return self.add_stage({"$set": kwargs})
 
     def set_window_fields(
         self, **kwargs: Unpack[SetWindowFieldsSpec]
@@ -226,7 +224,9 @@ class PipelineBuilder:
     def skip(self, skip: int) -> "PipelineBuilder":
         return self.add_stage({"$skip": skip})
 
-    def sort(self, **kwargs: Union[Literal[1, -1], mongopype_types.MetaTextScore]) -> "PipelineBuilder":
+    def sort(
+        self, **kwargs: Union[Literal[1, -1], mongopype_types.MetaTextScore]
+    ) -> "PipelineBuilder":
         return self.add_stage({"$sort": kwargs})
 
     def sort_by_count(self, field: mongopype_types.Expression) -> "PipelineBuilder":
