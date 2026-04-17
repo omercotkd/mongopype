@@ -1,5 +1,5 @@
-from typing import Union, Unpack
-from mongopype import types as mongopype_types
+from typing import Union, Unpack, Literal
+from . import types as mongopype_types
 from .pipeline import Pipeline, PipelineHint
 from .stages.add_fields import AddFieldsSpec
 from .stages.bucket import BucketSpec
@@ -9,7 +9,6 @@ from .stages.coll_stats import CollStatsSpec
 from .stages.current_op import CurrentOpSpec
 from .stages.densify import DensifySpec
 from .stages.documents import DocumentsSpec
-from .stages.facet import FacetSpec
 from .stages.fill import FillSpec
 from .stages.geo_near import GeoNearSpec
 from .stages.graph_lookup import GraphLookupSpec, GraphLookupKwargsSpec
@@ -35,7 +34,6 @@ from .stages.search import SearchSpec
 from .stages.search_meta import SearchMetaSpec
 from .stages.set import SetSpec
 from .stages.set_window_fields import SetWindowFieldsSpec
-from .stages.sort import SortSpec
 from .stages.union_with import UnionWithFullSpec
 from .stages.unwind import UnwindDocSpec
 from .stages.vector_search import VectorSearchSpec
@@ -97,8 +95,8 @@ class PipelineBuilder:
     def documents(self, documents: DocumentsSpec) -> "PipelineBuilder":
         return self.add_stage({"$documents": documents})
 
-    def facet(self, **kwargs: FacetSpec) -> "PipelineBuilder":
-        return self.add_stage({"$facet": kwargs.__dict__})
+    def facet(self, **kwargs: Pipeline) -> "PipelineBuilder":
+        return self.add_stage({"$facet": kwargs})
 
     def fill(self, **kwargs: Unpack[FillSpec]) -> "PipelineBuilder":
         return self.add_stage({"$fill": kwargs})
@@ -228,8 +226,8 @@ class PipelineBuilder:
     def skip(self, skip: int) -> "PipelineBuilder":
         return self.add_stage({"$skip": skip})
 
-    def sort(self, **kwargs: SortSpec) -> "PipelineBuilder":
-        return self.add_stage({"$sort": kwargs.__dict__})
+    def sort(self, **kwargs: Union[Literal[1, -1], mongopype_types.MetaTextScore]) -> "PipelineBuilder":
+        return self.add_stage({"$sort": kwargs})
 
     def sort_by_count(self, field: mongopype_types.Expression) -> "PipelineBuilder":
         return self.add_stage({"$sortByCount": field})

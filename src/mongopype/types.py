@@ -158,7 +158,9 @@ class OutputIntoTimeSeries(OutputInto):
     bucketRoundingSeconds: Optional[int]
 
 
-SortOrder = dict[str, Union[Literal[1, -1], dict[Literal["$meta"], Literal["textScore"]]]]
+MetaTextScore = dict[Literal["$meta"], Literal["textScore"]]
+
+SortOrder = dict[str, Union[Literal[1, -1], MetaTextScore]]
 
 
 class UserDocument(TypedDict):

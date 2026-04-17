@@ -19,3 +19,8 @@ license-files = ["LICEN[CS]E*"]
 [project.urls]
 Homepage = "https://github.com/omercotkd/mongopype"
 Issues = "https://github.com/omercotkd/mongopype/issues"
+
+[dependency-groups]
+dev = [
+    "pytest>=9.0.3",
+]

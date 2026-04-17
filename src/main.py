@@ -1,9 +1,4 @@
-from mongopype.pipeline import Pipeline, PipelineHint
-
-# from mongopype.stages.add_fields import verify_add_fields
-from mongopype.stages.bucket import BucketSpec
-from mongopype.stages.bucket_auto import BucketAutoSpec
-from typing import NotRequired, TypedDict, Union, Never
+from mongopype.pipeline import Pipeline
 
 res = Pipeline(
     [
@@ -27,7 +22,7 @@ res = Pipeline(
             }
         },
     ]
-).verify(version="6.0")
+).verify(version=(6, 0))
 
 # print(f"Pipeline verification result: {res}")
 
