@@ -1,13 +1,17 @@
 # Done
 
-from typing import TypedDict
+from typing import Literal, TypedDict, Any
 from ..types import Version
 
 # https://www.mongodb.com/docs/manual/reference/operator/aggregation/queryStats/
 
 
+class TransformIdentifiersSpec(TypedDict, total=False):
+    algorithm: Literal["hmac-sha-256"]
+    hmacKey: Any
+
 class QueryStatsSpec(TypedDict, total=False):
-    transformIdentifiers: dict
+    transformIdentifiers: TransformIdentifiersSpec
 
 
 QueryStats = TypedDict("QueryStats", {"$queryStats": QueryStatsSpec})
@@ -21,8 +25,11 @@ def verify_query_stats(
     spec: QueryStatsSpec, version: Version, pipeline_index: int, pipeline_length: int, is_atlas: bool
 ) -> tuple[bool, list[str]]:
 
-    errors = []
+    errors: list[str] = []
 
+    if not is_atlas:
+        errors.append("$queryStats is only supported on MongoDB Atlas.")
+    
     if version < (8, 0):
         errors.append("$queryStats requires MongoDB >= 8.0.")
 

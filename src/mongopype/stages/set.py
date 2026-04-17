@@ -1,9 +1,6 @@
-# Done
-
 from typing import TypedDict
 from ..types import Expression, Version
 
-# https://www.mongodb.com/docs/manual/reference/operator/aggregation/set/
 
 SetSpec = dict[str, Expression]
 
@@ -18,7 +15,7 @@ def verify_set(
     spec: SetSpec, version: Version, pipeline_index: int, pipeline_length: int, is_atlas: bool
 ) -> tuple[bool, list[str]]:
 
-    errors = []
+    errors: list[str] = []
 
     if version < (4, 2):
         errors.append("$set requires MongoDB >= 4.2.")

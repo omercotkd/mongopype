@@ -1,9 +1,6 @@
-# Done
-
 from typing import TypedDict
 from ..types import Expression, Version
 
-# https://www.mongodb.com/docs/manual/reference/operator/aggregation/redact/
 
 RedactSpec = Expression
 

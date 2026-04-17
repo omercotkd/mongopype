@@ -1,9 +1,6 @@
-# Done
-
 from typing import TypedDict
 from ..types import Version
 
-# https://www.mongodb.com/docs/manual/reference/operator/aggregation/querySettings/
 
 
 class QuerySettingsSpec(TypedDict, total=False):
@@ -21,7 +18,7 @@ def verify_query_settings(
     spec: QuerySettingsSpec, version: Version, pipeline_index: int, pipeline_length: int, is_atlas: bool
 ) -> tuple[bool, list[str]]:
 
-    errors = []
+    errors: list[str] = []
 
     if version < (8, 0):
         errors.append("$querySettings requires MongoDB >= 8.0.")

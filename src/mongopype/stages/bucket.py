@@ -1,5 +1,3 @@
-# Done
-
 from typing import TypedDict, Union, Optional
 from datetime import datetime
 from ..types import AccumulatorExpression, Expression, Version
@@ -26,7 +24,7 @@ def verify_bucket(
     spec: BucketSpec, version: Version, pipeline_index: int, pipeline_length: int, is_atlas: bool
 ) -> tuple[bool, list[str]]:
 
-    errors = []
+    errors: list[str] = []
 
     for key, value in spec["output"].items():
         if not len(value) == 1:

@@ -1,9 +1,6 @@
-# Done
-
 from typing import Any, TypedDict
 from ..types import Version, Expression, SortOrder
 
-# https://www.mongodb.com/docs/manual/reference/operator/aggregation/setWindowFields/
 
 
 class SetWindowFieldsSpec(TypedDict, total=False):
@@ -23,7 +20,7 @@ def verify_set_window_fields(
     spec: SetWindowFieldsSpec, version: Version, pipeline_index: int, pipeline_length: int, is_atlas: bool
 ) -> tuple[bool, list[str]]:
 
-    errors = []
+    errors: list[str] = []
 
     if version < (5, 0):
         errors.append("$setWindowFields requires MongoDB >= 5.0.")

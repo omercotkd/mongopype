@@ -1,9 +1,6 @@
-# Done
-
 from typing import TypedDict
 from ..types import Version
 
-# https://www.mongodb.com/docs/manual/reference/operator/aggregation/shardedDataDistribution/
 
 ShardedDataDistributionSpec = dict[str, object]
 
@@ -25,7 +22,7 @@ def verify_sharded_data_distribution(
     is_atlas: bool,
 ) -> tuple[bool, list[str]]:
 
-    errors = []
+    errors: list[str] = []
 
     if version < (6, 0):
         errors.append("$shardedDataDistribution requires MongoDB >= 6.0.")

@@ -1,5 +1,3 @@
-# Done
-
 from typing import Literal, TypedDict
 from ..types import Expression, AccumulatorExpression, Version
 
@@ -33,21 +31,27 @@ https://www.mongodb.com/docs/manual/reference/operator/aggregation/bucketAuto/
 
 
 def verify_bucket_auto(
-    spec: BucketAutoSpec, version: Version, pipeline_index: int, pipeline_length: int, is_atlas: bool
+    spec: BucketAutoSpec,
+    version: Version,
+    pipeline_index: int,
+    pipeline_length: int,
+    is_atlas: bool,
 ) -> tuple[bool, list[str]]:
 
-    errors = []
+    errors: list[str] = []
 
     # buckets must be positve 32-bit integer
-    if not (isinstance(spec["buckets"], int) and 0 < spec["buckets"] <= 2**31 - 1):
+    if not 0 < spec["buckets"] <= 2**31 - 1:
         errors.append(
             f"Invalid 'buckets' value: {spec['buckets']}. Must be a positive 32-bit integer."
         )
 
     for key, value in spec["output"].items():
         if not len(value) == 1:
-            errors.append(f"Invalid output specification for field '{key}': {value}. Must contain exactly one accumulator expression.")
-    
+            errors.append(
+                f"Invalid output specification for field '{key}': {value}. Must contain exactly one accumulator expression."
+            )
+
     if errors:
         return False, errors
 

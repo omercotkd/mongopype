@@ -1,5 +1,3 @@
-# Done
-
 from typing import Any, Union, TypedDict, TYPE_CHECKING
 from ..types import Version
 
@@ -69,7 +67,7 @@ def verify_lookup(
     is_atlas: bool,
 ) -> tuple[bool, list[str]]:
 
-    errors = []
+    errors: list[str] = []
 
     if "as" not in spec:
         errors.append("$lookup requires the 'as' field.")
@@ -85,12 +83,14 @@ def verify_lookup(
             )
         if isinstance(spec.get("pipeline"), list):
             for stage in spec["pipeline"]:
-                if isinstance(stage, dict):
-                    stage_key = next(iter(stage), None)
-                    if stage_key in ("$out", "$merge"):
-                        errors.append(
-                            f"$lookup sub-pipeline cannot contain {stage_key}."
-                        )
+                stage_key = next(iter(stage), None)
+                if stage_key in ("$out", "$merge"):
+                    errors.append(
+                        f"$lookup sub-pipeline cannot contain {stage_key}."
+                    )
+            v, e = spec["pipeline"].verify(version, is_atlas)
+            if not v:
+                errors.extend(f"$lookup sub-pipeline: {err}" for err in e)
     else:
         # Equality form
         if "localField" not in spec:

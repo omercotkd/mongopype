@@ -1,9 +1,6 @@
-# Done
-
 from typing import TypedDict
 from ..types import SortOrder, Version
 
-# https://www.mongodb.com/docs/manual/reference/operator/aggregation/sort/
 
 SortSpec = SortOrder
 
@@ -18,7 +15,7 @@ def verify_sort(
     spec: SortSpec, version: Version, pipeline_index: int, pipeline_length: int, is_atlas: bool
 ) -> tuple[bool, list[str]]:
 
-    errors = []
+    errors: list[str] = []
 
     if not spec:
         errors.append("$sort must specify at least one sort field.")

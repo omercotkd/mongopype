@@ -1,9 +1,6 @@
-# Done
-
 from typing import Any, TypedDict
 from ..types import Version
 
-# https://www.mongodb.com/docs/manual/reference/operator/aggregation/rankFusion/
 
 
 class RankFusionSpec(TypedDict, total=False):
@@ -22,7 +19,7 @@ def verify_rank_fusion(
     spec: RankFusionSpec, version: Version, pipeline_index: int, pipeline_length: int, is_atlas: bool
 ) -> tuple[bool, list[str]]:
 
-    errors = []
+    errors: list[str] = []
 
     if not is_atlas:
         errors.append("$rankFusion is only available on MongoDB Atlas.")

@@ -1,10 +1,5 @@
-# Done
-
 from typing import TypedDict
 from ..types import Version
-
-# https://www.mongodb.com/docs/manual/reference/operator/aggregation/currentOp/
-
 
 class CurrentOpSpec(TypedDict, total=False):
     allUsers: bool
@@ -26,7 +21,7 @@ def verify_current_op(
     spec: CurrentOpSpec, version: Version, pipeline_index: int, pipeline_length: int, is_atlas: bool
 ) -> tuple[bool, list[str]]:
 
-    errors = []
+    errors: list[str] = []
 
     if pipeline_index != 0:
         errors.append("$currentOp must be the first stage in the pipeline.")

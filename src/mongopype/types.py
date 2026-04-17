@@ -11,7 +11,7 @@ BSON = Union[str, int, float, bool, None, dict[str, "BSON"], list["BSON"]]
 
 Document = dict[str, BSON]
 
-Stages = Literal[
+Stage = Literal[
     "$addFields",
     "$bucket",
     "$bucketAuto",

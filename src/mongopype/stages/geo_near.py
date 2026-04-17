@@ -1,9 +1,5 @@
-# Done
-
 from typing import Literal, Union, TypedDict
-from ..types import Version, Expression, Document
-
-# https://www.mongodb.com/docs/manual/reference/operator/aggregation/geoNear/
+from ..types import Version, Document
 
 
 class GeoJSONPoint(TypedDict):
@@ -34,7 +30,7 @@ def verify_geo_near(
     spec: GeoNearSpec, version: Version, pipeline_index: int, pipeline_length: int, is_atlas: bool
 ) -> tuple[bool, list[str]]:
 
-    errors = []
+    errors: list[str] = []
 
     if pipeline_index != 0:
         errors.append("$geoNear must be the first stage in the pipeline.")

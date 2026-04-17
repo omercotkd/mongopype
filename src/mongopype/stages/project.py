@@ -1,9 +1,6 @@
-# Done
-
 from typing import Any, TypedDict
 from ..types import Version
 
-# https://www.mongodb.com/docs/manual/reference/operator/aggregation/project/
 
 ProjectSpec = dict[str, Any]
 
@@ -18,7 +15,7 @@ def verify_project(
     spec: ProjectSpec, version: Version, pipeline_index: int, pipeline_length: int, is_atlas: bool
 ) -> tuple[bool, list[str]]:
 
-    errors = []
+    errors: list[str] = []
 
     if not spec:
         errors.append("$project specification must not be empty.")

@@ -1,9 +1,5 @@
-# Done
-
 from typing import TypedDict
 from ..types import Version
-
-# https://www.mongodb.com/docs/manual/reference/operator/aggregation/listSearchIndexes/
 
 
 class ListSearchIndexesSpec(TypedDict, total=False):
@@ -22,7 +18,7 @@ def verify_list_search_indexes(
     spec: ListSearchIndexesSpec, version: Version, pipeline_index: int, pipeline_length: int, is_atlas: bool
 ) -> tuple[bool, list[str]]:
 
-    errors = []
+    errors: list[str] = []
 
     if not is_atlas:
         errors.append("$listSearchIndexes is only available on MongoDB Atlas.")

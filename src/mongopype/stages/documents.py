@@ -1,9 +1,6 @@
-# Done
-
 from typing import Union, TypedDict
 from ..types import Document, Expression, Version
 
-# https://www.mongodb.com/docs/manual/reference/operator/aggregation/documents/
 
 DocumentsSpec = Union[list[Document], Expression]
 
@@ -18,7 +15,7 @@ def verify_documents(
     spec: DocumentsSpec, version: Version, pipeline_index: int, pipeline_length: int, is_atlas: bool
 ) -> tuple[bool, list[str]]:
 
-    errors = []
+    errors: list[str] = []
 
     if version < (6, 0):
         errors.append("$documents requires MongoDB >= 6.0.")

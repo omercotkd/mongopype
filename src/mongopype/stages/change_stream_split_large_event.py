@@ -1,5 +1,3 @@
-# Done
-
 from typing import TypedDict
 from ..types import Version
 
@@ -25,7 +23,7 @@ def verify_change_stream_split_large_event(
     is_atlas: bool,
 ) -> tuple[bool, list[str]]:
 
-    errors = []
+    errors: list[str] = []
 
     if version < (7, 0):
         errors.append("$changeStreamSplitLargeEvent requires MongoDB >= 7.0.")

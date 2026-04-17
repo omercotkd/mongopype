@@ -1,9 +1,6 @@
-# Done
-
 from typing import Any, Union, TypedDict
 from ..types import Version
 
-# https://www.mongodb.com/docs/atlas/atlas-vector-search/vector-search-stage/
 
 
 class VectorSearchSpec(TypedDict, total=False):
@@ -27,7 +24,7 @@ def verify_vector_search(
     spec: VectorSearchSpec, version: Version, pipeline_index: int, pipeline_length: int, is_atlas: bool
 ) -> tuple[bool, list[str]]:
 
-    errors = []
+    errors: list[str] = []
 
     if not is_atlas:
         errors.append("$vectorSearch is only available on MongoDB Atlas.")

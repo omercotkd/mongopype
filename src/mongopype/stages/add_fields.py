@@ -1,5 +1,3 @@
-# Done
-
 from typing import TypedDict, Literal
 from ..types import Document, Version
 

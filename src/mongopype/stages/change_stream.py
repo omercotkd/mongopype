@@ -1,13 +1,9 @@
-# Done
-
-from typing import Optional, TypedDict, Any
+from typing import TypedDict, Any
 from ..types import (
     ChaneStreamFullDocumentOptions,
     ChaneStreamFullDocumentBeforeChangeOptions,
     Version,
 )
-
-# https://www.mongodb.com/docs/manual/reference/operator/aggregation/changeStream/
 
 
 class ChangeStreamSpec(TypedDict, total=False):
@@ -35,7 +31,7 @@ def verify_change_stream(
     is_atlas: bool,
 ) -> tuple[bool, list[str]]:
 
-    errors = []
+    errors: list[str] = []
 
     if pipeline_index != 0:
         errors.append("$changeStream must be the first stage in the pipeline.")

@@ -1,9 +1,6 @@
-# Done
-
 from typing import Any, TypedDict
 from ..types import Version
 
-# https://www.mongodb.com/docs/atlas/atlas-search/
 
 SearchMetaSpec = dict[str, Any]
 
@@ -18,7 +15,7 @@ def verify_search_meta(
     spec: SearchMetaSpec, version: Version, pipeline_index: int, pipeline_length: int, is_atlas: bool
 ) -> tuple[bool, list[str]]:
 
-    errors = []
+    errors: list[str] = []
 
     if not is_atlas:
         errors.append("$searchMeta is only available on MongoDB Atlas.")

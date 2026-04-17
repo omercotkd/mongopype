@@ -12,14 +12,14 @@ from .stages.documents import DocumentsSpec
 from .stages.facet import FacetSpec
 from .stages.fill import FillSpec
 from .stages.geo_near import GeoNearSpec
-from .stages.graph_lookup import GraphLookupSpec
+from .stages.graph_lookup import GraphLookupSpec, GraphLookupKwargsSpec
 from .stages.group import GroupSpec
 from .stages.list_cluster_catalog import ListClusterCatalogSpec
 from .stages.list_local_sessions import ListLocalSessionsKwargsSpec
 from .stages.list_sampled_queries import ListSampledQueriesSpec
 from .stages.list_search_indexes import ListSearchIndexesSpec
 from .stages.list_sessions import ListSessionsKwargsSpec
-from .stages.lookup import LookupKwargsSpec
+from .stages.lookup import LookupKwargsSpec, LookupSpec
 from .stages.match import MatchSpec
 from .stages.merge import MergeDocSpec
 from .stages.plan_cache_stats import PlanCacheStatsSpec
@@ -42,7 +42,7 @@ from .stages.vector_search import VectorSearchSpec
 
 
 class PipelineBuilder:
-    def __init__(self, strict: bool = False):
+    def __init__(self):
         self._pipeline: Pipeline = Pipeline([])
 
     def verify(self):
@@ -85,7 +85,6 @@ class PipelineBuilder:
     def coll_stats(self, **kwargs: Unpack[CollStatsSpec]) -> "PipelineBuilder":
         return self.add_stage({"$collStats": kwargs})
 
-    # TODO verify field_name not empty and no $ or . characters
     def count(self, field_name: str) -> "PipelineBuilder":
         return self.add_stage({"$count": field_name})
 
@@ -107,8 +106,14 @@ class PipelineBuilder:
     def geo_near(self, **kwargs: Unpack[GeoNearSpec]) -> "PipelineBuilder":
         return self.add_stage({"$geoNear": kwargs})
 
-    def graph_lookup(self, **kwargs: Unpack[GraphLookupSpec]) -> "PipelineBuilder":
-        spec = {("from" if k == "from_" else "as" if k == "as_" else k): v for k, v in kwargs.items()}
+    def graph_lookup(
+        self, **kwargs: Unpack[GraphLookupKwargsSpec]
+    ) -> "PipelineBuilder":
+        spec: GraphLookupSpec = kwargs  # type: ignore
+        if "from_" in kwargs:
+            spec["from"] = kwargs.pop("from_")
+        if "as_" in kwargs:
+            spec["as"] = kwargs.pop("as_")
         return self.add_stage({"$graphLookup": spec})
 
     def group(self, **kwargs: GroupSpec) -> "PipelineBuilder":
@@ -120,23 +125,38 @@ class PipelineBuilder:
     def limit(self, limit: int) -> "PipelineBuilder":
         return self.add_stage({"$limit": limit})
 
-    def list_cluster_catalog(self, **kwargs: Unpack[ListClusterCatalogSpec]) -> "PipelineBuilder":
+    def list_cluster_catalog(
+        self, **kwargs: Unpack[ListClusterCatalogSpec]
+    ) -> "PipelineBuilder":
         return self.add_stage({"$listClusterCatalog": kwargs})
 
-    def list_local_sessions(self, **kwargs: Unpack[ListLocalSessionsKwargsSpec]) -> "PipelineBuilder":
+    def list_local_sessions(
+        self, **kwargs: Unpack[ListLocalSessionsKwargsSpec]
+    ) -> "PipelineBuilder":
         return self.add_stage({"$listLocalSessions": kwargs})
 
-    def list_sampled_queries(self, **kwargs: Unpack[ListSampledQueriesSpec]) -> "PipelineBuilder":
+    def list_sampled_queries(
+        self, **kwargs: Unpack[ListSampledQueriesSpec]
+    ) -> "PipelineBuilder":
         return self.add_stage({"$listSampledQueries": kwargs})
 
-    def list_search_indexes(self, **kwargs: Unpack[ListSearchIndexesSpec]) -> "PipelineBuilder":
+    def list_search_indexes(
+        self, **kwargs: Unpack[ListSearchIndexesSpec]
+    ) -> "PipelineBuilder":
         return self.add_stage({"$listSearchIndexes": kwargs})
 
-    def list_sessions(self, **kwargs: Unpack[ListSessionsKwargsSpec]) -> "PipelineBuilder":
+    def list_sessions(
+        self, **kwargs: Unpack[ListSessionsKwargsSpec]
+    ) -> "PipelineBuilder":
         return self.add_stage({"$listSessions": kwargs})
 
     def lookup(self, **kwargs: Unpack[LookupKwargsSpec]) -> "PipelineBuilder":
-        spec = {("from" if k == "from_" else "as" if k == "as_" else k): v for k, v in kwargs.items()}
+        spec: LookupSpec = kwargs  # type: ignore
+        if "from_" in kwargs:
+            spec["from"] = kwargs.pop("from_")
+        if "as_" in kwargs:
+            spec["as"] = kwargs.pop("as_")
+
         return self.add_stage({"$lookup": spec})
 
     def match(self, **kwargs: MatchSpec) -> "PipelineBuilder":
@@ -145,10 +165,17 @@ class PipelineBuilder:
     def merge(self, **kwargs: Unpack[MergeDocSpec]) -> "PipelineBuilder":
         return self.add_stage({"$merge": kwargs})
 
-    def out(self, to: Union[str, mongopype_types.OutputInto, mongopype_types.OutputIntoTimeSeries]) -> "PipelineBuilder":
+    def out(
+        self,
+        to: Union[
+            str, mongopype_types.OutputInto, mongopype_types.OutputIntoTimeSeries
+        ],
+    ) -> "PipelineBuilder":
         return self.add_stage({"$out": to})
 
-    def plan_cache_stats(self, **kwargs: Unpack[PlanCacheStatsSpec]) -> "PipelineBuilder":
+    def plan_cache_stats(
+        self, **kwargs: Unpack[PlanCacheStatsSpec]
+    ) -> "PipelineBuilder":
         return self.add_stage({"$planCacheStats": kwargs})
 
     def project(self, **kwargs: ProjectSpec) -> "PipelineBuilder":
@@ -190,7 +217,9 @@ class PipelineBuilder:
     def set(self, **kwargs: SetSpec) -> "PipelineBuilder":
         return self.add_stage({"$set": {**kwargs}})
 
-    def set_window_fields(self, **kwargs: Unpack[SetWindowFieldsSpec]) -> "PipelineBuilder":
+    def set_window_fields(
+        self, **kwargs: Unpack[SetWindowFieldsSpec]
+    ) -> "PipelineBuilder":
         return self.add_stage({"$setWindowFields": kwargs})
 
     def sharded_data_distribution(self) -> "PipelineBuilder":

@@ -1,9 +1,6 @@
-# Done
-
 from typing import Union, TypedDict
 from ..types import Version
 
-# https://www.mongodb.com/docs/manual/reference/operator/aggregation/unset/
 
 UnsetSpec = Union[str, list[str]]
 
@@ -18,7 +15,7 @@ def verify_unset(
     spec: UnsetSpec, version: Version, pipeline_index: int, pipeline_length: int, is_atlas: bool
 ) -> tuple[bool, list[str]]:
 
-    errors = []
+    errors: list[str] = []
 
     if version < (4, 2):
         errors.append("$unset requires MongoDB >= 4.2.")

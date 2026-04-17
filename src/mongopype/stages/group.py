@@ -1,9 +1,6 @@
-# Done
-
 from typing import Union, TypedDict
 from ..types import Expression, AccumulatorExpression, Version
 
-# https://www.mongodb.com/docs/manual/reference/operator/aggregation/group/
 
 GroupSpec = dict[str, Union[Expression, AccumulatorExpression]]
 
@@ -18,7 +15,7 @@ def verify_group(
     spec: GroupSpec, version: Version, pipeline_index: int, pipeline_length: int, is_atlas: bool
 ) -> tuple[bool, list[str]]:
 
-    errors = []
+    errors: list[str] = []
 
     if "_id" not in spec:
         errors.append("$group requires an '_id' field.")

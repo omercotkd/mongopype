@@ -1,9 +1,6 @@
-# Done
-
 from typing import Union, TypedDict
 from ..types import Version, UserDocument
 
-# https://www.mongodb.com/docs/manual/reference/operator/aggregation/listSessions/
 
 
 class _AllUsersSpec(TypedDict, total=False):
@@ -33,12 +30,12 @@ def verify_list_sessions(
     spec: ListSessionsSpec, version: Version, pipeline_index: int, pipeline_length: int, is_atlas: bool
 ) -> tuple[bool, list[str]]:
 
-    errors = []
+    errors: list[str] = []
 
     if pipeline_index != 0:
         errors.append("$listSessions must be the first stage in the pipeline.")
 
-    if isinstance(spec, dict) and "allUsers" in spec and "users" in spec:
+    if "allUsers" in spec and "users" in spec:
         errors.append("$listSessions cannot specify both 'allUsers' and 'users'.")
 
     if errors:

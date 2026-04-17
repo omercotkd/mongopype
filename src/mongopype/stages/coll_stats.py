@@ -1,9 +1,5 @@
-# Done
-
-from typing import Optional, TypedDict
+from typing import TypedDict
 from ..types import Version
-
-# https://www.mongodb.com/docs/manual/reference/operator/aggregation/collStats/
 
 
 class LatencyStatsOptions(TypedDict, total=False):
@@ -32,7 +28,7 @@ def verify_coll_stats(
     spec: CollStatsSpec, version: Version, pipeline_index: int, pipeline_length: int, is_atlas: bool
 ) -> tuple[bool, list[str]]:
 
-    errors = []
+    errors: list[str] = []
 
     if pipeline_index != 0:
         errors.append("$collStats must be the first stage in the pipeline.")

@@ -1,10 +1,5 @@
-# Done
-
 from typing import Literal, TypedDict, Union
 from ..types import Version, Expression, SortOrder
-
-# https://www.mongodb.com/docs/manual/reference/operator/aggregation/fill/
-
 
 class FillOutputValueField(TypedDict):
     value: Expression
@@ -35,7 +30,7 @@ def verify_fill(
     spec: FillSpec, version: Version, pipeline_index: int, pipeline_length: int, is_atlas: bool
 ) -> tuple[bool, list[str]]:
 
-    errors = []
+    errors: list[str] = []
 
     if version < (5, 3):
         errors.append("$fill requires MongoDB >= 5.3.")
@@ -46,14 +41,13 @@ def verify_fill(
     if "partitionBy" in spec and "partitionByFields" in spec:
         errors.append("$fill cannot specify both 'partitionBy' and 'partitionByFields'.")
 
-    if "output" in spec and isinstance(spec["output"], dict):
+    if "output" in spec:
         for field_name, field_spec in spec["output"].items():
-            if isinstance(field_spec, dict):
-                has_method = "method" in field_spec
-                if has_method and "sortBy" not in spec:
-                    errors.append(
-                        f"$fill output field '{field_name}' uses 'method' but no 'sortBy' is specified."
-                    )
+            has_method = "method" in field_spec
+            if has_method and "sortBy" not in spec:
+                errors.append(
+                    f"$fill output field '{field_name}' uses 'method' but no 'sortBy' is specified."
+                )
 
     if errors:
         return False, errors

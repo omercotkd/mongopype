@@ -1,6 +1,6 @@
-from typing import Union, Any
+from typing import Union, cast
 
-from mongopype.types import ValidationFunction, Version
+from .types import ValidationFunction, Version, Stage
 from .stages.add_fields import AddFields, verify_add_fields
 from .stages.bucket import Bucket, verify_bucket
 from .stages.bucket_auto import BucketAuto, verify_bucket_auto
@@ -122,7 +122,7 @@ PipelineHint = Union[
     VectorSearch,
 ]
 
-__MAPPING__: dict[str, ValidationFunction] = {
+__MAPPING__: dict[Stage, ValidationFunction] = {
     "$addFields": verify_add_fields,
     "$bucket": verify_bucket,
     "$bucketAuto": verify_bucket_auto,
@@ -177,18 +177,22 @@ __MAPPING__: dict[str, ValidationFunction] = {
 
 class Pipeline(list[PipelineHint]):
 
-    def verify(self, version: Version, is_atlas: bool = False) -> tuple[bool, list[str]]:
-        all_errors = []
+    def verify(
+        self, version: Version, is_atlas: bool = False
+    ) -> tuple[bool, list[tuple[str, list[str]]]]:
+        all_errors: list[tuple[str, list[str]]] = []
         pipeline_length = len(self)
         for index, stage in enumerate(self):
             stage_key = next(iter(stage))
-            verify_function = __MAPPING__.get(stage_key)
+            verify_function = __MAPPING__.get(cast(Stage, stage_key))
             if verify_function:
                 valid, errors = verify_function(
                     stage[stage_key], version, index, pipeline_length, is_atlas
                 )
                 if not valid:
                     all_errors.append((f"Stage {index} ({stage_key}):", errors))
+            else:
+                all_errors.append((f"Stage {index} ({stage_key}):", ["Unknown stage operator."]))
         if all_errors:
             return False, all_errors
         return True, []
