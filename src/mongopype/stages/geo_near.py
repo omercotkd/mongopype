@@ -1,4 +1,4 @@
-from typing import Literal, Union, TypedDict
+from typing import Literal, Union, TypedDict, NotRequired
 from ..types import Version, Document
 
 
@@ -9,14 +9,17 @@ class GeoJSONPoint(TypedDict):
 
 class GeoNearSpec(TypedDict):
     near: Union[GeoJSONPoint, list[float]]
-    distanceField: str
-    distanceMultiplier: float
-    includeLocs: str
-    key: str
-    maxDistance: float
-    minDistance: float
-    query: Document
-    spherical: bool
+    distanceField: NotRequired[str] 
+    """
+    not required since MongoDB 8.1 for queries on non time-series collections
+    """
+    distanceMultiplier: NotRequired[float]
+    includeLocs: NotRequired[str]
+    key: NotRequired[str]
+    maxDistance: NotRequired[float]
+    minDistance: NotRequired[float]
+    query: NotRequired[Document]
+    spherical: NotRequired[bool]
 
 
 GeoNear = TypedDict("GeoNear", {"$geoNear": GeoNearSpec})
@@ -34,9 +37,6 @@ def verify_geo_near(
 
     if pipeline_index != 0:
         errors.append("$geoNear must be the first stage in the pipeline.")
-
-    if "near" not in spec:
-        errors.append("$geoNear requires a 'near' field.")
 
     if "distanceField" not in spec and version < (8, 1):
         errors.append("$geoNear requires a 'distanceField' field (optional since MongoDB 8.1).")

@@ -1,22 +1,22 @@
-from typing import Union, TypedDict
+from typing import NotRequired, Union, TypedDict
 from ..types import Version, UserDocument
 
 
 
-class _AllUsersSpec(TypedDict, total=False):
+class _AllUsersSpec(TypedDict):
     allUsers: bool
 
 
-class _UsersSpec(TypedDict, total=False):
+class _UsersSpec(TypedDict):
     users: list[UserDocument]
 
 
 ListLocalSessionsSpec = Union[_AllUsersSpec, _UsersSpec]
 
 
-class ListLocalSessionsKwargsSpec(TypedDict, total=False):
-    allUsers: bool
-    users: list[UserDocument]
+class ListLocalSessionsKwargsSpec(TypedDict):
+    allUsers: NotRequired[bool]
+    users: NotRequired[list[UserDocument]]
 
 
 ListLocalSessions = TypedDict("ListLocalSessions", {"$listLocalSessions": ListLocalSessionsSpec})

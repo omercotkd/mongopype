@@ -1,10 +1,10 @@
-from typing import TypedDict
+from typing import TypedDict, NotRequired
 from ..types import Version
 
 
 
-class PlanCacheStatsSpec(TypedDict, total=False):
-    allHosts: bool
+class PlanCacheStatsSpec(TypedDict):
+    allHosts: NotRequired[bool]
 
 
 PlanCacheStats = TypedDict("PlanCacheStats", {"$planCacheStats": PlanCacheStatsSpec})

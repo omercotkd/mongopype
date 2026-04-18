@@ -1,10 +1,10 @@
-from typing import TypedDict
+from typing import TypedDict, NotRequired
 from ..types import Version
 
 
-class ListSearchIndexesSpec(TypedDict, total=False):
-    id: str
-    name: str
+class ListSearchIndexesSpec(TypedDict):
+    id: NotRequired[str]
+    name: NotRequired[str]
 
 
 ListSearchIndexes = TypedDict("ListSearchIndexes", {"$listSearchIndexes": ListSearchIndexesSpec})

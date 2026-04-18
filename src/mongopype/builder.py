@@ -18,6 +18,7 @@ from .stages.list_search_indexes import ListSearchIndexesSpec
 from .stages.list_sessions import ListSessionsKwargsSpec
 from .stages.lookup import LookupKwargsSpec, LookupSpec
 from .stages.merge import MergeDocSpec
+from .stages.out import OutSpec
 from .stages.plan_cache_stats import PlanCacheStatsSpec
 from .stages.query_settings import QuerySettingsSpec
 from .stages.query_stats import QueryStatsSpec
@@ -163,9 +164,7 @@ class PipelineBuilder:
 
     def out(
         self,
-        to: Union[
-            str, mongopype_types.OutputInto, mongopype_types.OutputIntoTimeSeries
-        ],
+        to: OutSpec,
     ) -> "PipelineBuilder":
         return self.add_stage({"$out": to})
 

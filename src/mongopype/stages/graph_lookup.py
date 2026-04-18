@@ -1,7 +1,6 @@
-from typing import TypedDict
+from typing import TypedDict, NotRequired
 from ..types import Version, Expression, Document
 
-# https://www.mongodb.com/docs/manual/reference/operator/aggregation/graphLookup/
 
 
 GraphLookupSpec = TypedDict(
@@ -12,11 +11,10 @@ GraphLookupSpec = TypedDict(
         "connectFromField": str,
         "connectToField": str,
         "as": str,
-        "maxDepth": int,
-        "depthField": str,
-        "restrictSearchWithMatch": Document,
+        "maxDepth": NotRequired[int],
+        "depthField": NotRequired[str],
+        "restrictSearchWithMatch": NotRequired[Document],
     },
-    total=False,
 )
 
 
@@ -28,11 +26,10 @@ GraphLookupKwargsSpec = TypedDict(
         "connectFromField": str,
         "connectToField": str,
         "as_": str,
-        "maxDepth": int,
-        "depthField": str,
-        "restrictSearchWithMatch": Document,
+        "maxDepth": NotRequired[int],
+        "depthField": NotRequired[str],
+        "restrictSearchWithMatch": NotRequired[Document],
     },
-    total=False,
 )
 
 GraphLookup = TypedDict("GraphLookup", {"$graphLookup": GraphLookupSpec})
@@ -41,7 +38,6 @@ $graphLookup stage:
 https://www.mongodb.com/docs/manual/reference/operator/aggregation/graphLookup/
 """
 
-_REQUIRED_FIELDS = ["from", "startWith", "connectFromField", "connectToField", "as"]
 
 
 def verify_graph_lookup(
@@ -53,10 +49,6 @@ def verify_graph_lookup(
 ) -> tuple[bool, list[str]]:
 
     errors: list[str] = []
-
-    for field in _REQUIRED_FIELDS:
-        if field not in spec:
-            errors.append(f"$graphLookup requires the '{field}' field.")
 
     if "maxDepth" in spec:
         max_depth = spec["maxDepth"]

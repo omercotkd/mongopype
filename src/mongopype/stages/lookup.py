@@ -1,4 +1,4 @@
-from typing import Any, Union, TypedDict, TYPE_CHECKING
+from typing import Any, Union, TypedDict, TYPE_CHECKING, NotRequired
 from ..types import Version
 
 
@@ -19,11 +19,10 @@ LookupPipelineSpec = TypedDict(
     "LookupPipelineSpec",
     {
         "from": str,
-        "let": dict[str, Any],
+        "let": NotRequired[dict[str, Any]],
         "pipeline": "Pipeline",
         "as": str,
     },
-    total=False,
 )
 
 MixedLookupSpec = TypedDict(
@@ -32,7 +31,7 @@ MixedLookupSpec = TypedDict(
         "from": str,
         "localField": str,
         "foreignField": str,
-        "let": dict[str, Any],
+        "let": NotRequired[dict[str, Any]],
         "pipeline": "Pipeline",
         "as": str,
     },
@@ -43,13 +42,13 @@ MixedLookupSpec = TypedDict(
 LookupSpec = Union[LookupEqualitySpec, LookupPipelineSpec, MixedLookupSpec]
 
 
-class LookupKwargsSpec(TypedDict, total=False):
+class LookupKwargsSpec(TypedDict):
     from_: str
     as_: str
-    localField: str
-    foreignField: str
-    let: dict[str, Any]
-    pipeline: "Pipeline"
+    localField: NotRequired[str]
+    foreignField: NotRequired[str]
+    let: NotRequired[dict[str, Any]]
+    pipeline: NotRequired["Pipeline"]
 
 
 Lookup = TypedDict("Lookup", {"$lookup": LookupSpec})

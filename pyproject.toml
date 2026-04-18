@@ -15,6 +15,9 @@ classifiers = [
 ]
 license = "MIT"
 license-files = ["LICEN[CS]E*"]
+dependencies = [
+    "pymongo",
+]
 
 [project.urls]
 Homepage = "https://github.com/omercotkd/mongopype"

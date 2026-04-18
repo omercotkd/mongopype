@@ -1,9 +1,9 @@
-from typing import TypedDict
+from typing import TypedDict, NotRequired
 from ..types import Version
 
 
-class ListSampledQueriesSpec(TypedDict, total=False):
-    namespace: str
+class ListSampledQueriesSpec(TypedDict):
+    namespace: NotRequired[str]
 
 
 ListSampledQueries = TypedDict(

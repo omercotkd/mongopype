@@ -1,13 +1,53 @@
-from typing import Callable, Literal, Any, Optional, TypedDict, Union
+from typing import Callable, Literal, Any, TypedDict, Union
+from bson import (
+    ObjectId,
+    DatetimeMS,
+    Binary,
+    Int64,
+    Code,
+    DBRef,
+    MaxKey,
+    MinKey,
+    Regex,
+    # SON,
+    Timestamp,
+    Decimal128,
+)
+import datetime, uuid
 
 
 Version = tuple[int, int]  # major, minor
 
 ValidationFunction = Callable[[Any, Version, int, int, bool], tuple[bool, list[str]]]
 
+BSON = Union[
+    str,
+    bytes,
+    int,
+    float,
+    bool,
+    None,
+    DatetimeMS,
+    ObjectId,
+    Binary,
+    Code,
+    DBRef,
+    MaxKey,
+    MinKey,
+    Regex[str],
+    Regex[bytes],
+    Timestamp,
+    Decimal128,
+    Int64,
+    datetime.datetime,
+    uuid.UUID,
+    tuple["BSON", ...],
+    dict[str, "BSON"],
+    list["BSON"],
+]
+
 Expression = Union[str, int, float, dict[str, Any], list[Any]]
 
-BSON = Union[str, int, float, bool, None, dict[str, "BSON"], list["BSON"]]
 
 Document = dict[str, BSON]
 
@@ -112,19 +152,6 @@ AccumulatorExpression = dict[Accumulator, Expression]
 class OutputInto(TypedDict):
     db: str
     coll: str
-
-
-class OutputIntoTimeSeries(OutputInto):
-    db: str
-    coll: str
-    timeField: str
-    # should not be the _id field
-    metaField: Optional[str]
-    granularity: Optional[Literal["seconds", "minutes", "hours"]]
-    # Possible values are 1-31536000 ver 6.3 and later
-    bucketMaxSpanSeconds: Optional[int]
-    #  ver 6.3 and later must be eq to bucketMaxSpanSeconds
-    bucketRoundingSeconds: Optional[int]
 
 
 MetaTextScore = dict[Literal["$meta"], Literal["textScore"]]

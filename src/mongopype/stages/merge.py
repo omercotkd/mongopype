@@ -1,22 +1,21 @@
-from typing import Union, Literal, TypedDict, Any, TYPE_CHECKING
+from typing import Union, Literal, TypedDict, Any, TYPE_CHECKING, NotRequired
 from ..types import Version, OutputInto
 
-# https://www.mongodb.com/docs/manual/reference/operator/aggregation/merge/
 
 
 if TYPE_CHECKING:
     from ..pipeline import Pipeline
 
 
-class MergeDocSpec(TypedDict, total=False):
+class MergeDocSpec(TypedDict):
     into: Union[str, OutputInto]
-    on: Union[str, list[str]]
-    let: dict[str, Any]
-    whenMatched: Union[
+    on: NotRequired[Union[str, list[str]]]
+    let: NotRequired[dict[str, Any]]
+    whenMatched: NotRequired[Union[
         Literal["replace", "keepExisting", "merge", "fail"],
-        Pipeline,
-    ]
-    whenNotMatched: Literal["insert", "discard", "fail"]
+        "Pipeline",
+    ]]
+    whenNotMatched: NotRequired[Literal["insert", "discard", "fail"]]
 
 
 MergeSpec = Union[str, MergeDocSpec]
@@ -43,10 +42,6 @@ def verify_merge(
 
     if pipeline_index != pipeline_length - 1:
         errors.append("$merge must be the last stage in the pipeline.")
-
-    if isinstance(spec, dict):
-        if "into" not in spec:
-            errors.append("$merge requires the 'into' field.")
 
     if errors:
         return False, errors

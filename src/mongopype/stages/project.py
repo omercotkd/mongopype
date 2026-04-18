@@ -1,8 +1,8 @@
-from typing import Any, TypedDict
-from ..types import Version
+from typing import TypedDict
+from ..types import Version, BSON
 
 
-ProjectSpec = dict[str, Any]
+ProjectSpec = dict[str, BSON]
 
 Project = TypedDict("Project", {"$project": ProjectSpec})
 """

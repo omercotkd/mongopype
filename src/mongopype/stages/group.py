@@ -1,7 +1,6 @@
 from typing import Union, TypedDict
 from ..types import Expression, AccumulatorExpression, Version
 
-# https://www.mongodb.com/docs/manual/reference/operator/aggregation/group/
 
 GroupSpec = dict[str, Union[Expression, AccumulatorExpression]]
 

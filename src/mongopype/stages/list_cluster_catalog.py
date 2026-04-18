@@ -1,11 +1,11 @@
-from typing import TypedDict
+from typing import TypedDict, NotRequired
 from ..types import Version
 
 
 
-class ListClusterCatalogSpec(TypedDict, total=False):
-    shards: bool
-    balancingConfiguration: bool
+class ListClusterCatalogSpec(TypedDict):
+    shards: NotRequired[bool]
+    balancingConfiguration: NotRequired[bool]
 
 
 ListClusterCatalog = TypedDict("ListClusterCatalog", {"$listClusterCatalog": ListClusterCatalogSpec})
