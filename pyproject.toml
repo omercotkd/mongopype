@@ -8,13 +8,13 @@ version = "0.1.0"
 authors = [{ name = "Omer Cohen", email = "omercotkd+mongopype@gmail.com" }]
 description = "Pythonic builder for MongoDB aggregation pipelines"
 readme = "README.md"
-requires-python = ">=3.10"
+requires-python = ">=3.11"
 classifiers = [
     "Programming Language :: Python :: 3",
     "Operating System :: OS Independent",
 ]
 license = "MIT"
-license-files = ["LICEN[CS]E*"]
+license-files = ["LICENSE*"]
 dependencies = [
     "pymongo",
 ]
