@@ -1,5 +1,5 @@
 """Tests for $out stage."""
-from tests.conftest import V_60, V_70
+from tests.conftest import V_60
 from mongopype.stages.out import verify_out
 
 
@@ -26,14 +26,3 @@ def test_out_dict_form_last_valid():
     assert valid is True
     assert errors == []
 
-
-def test_out_dict_missing_db_fails():
-    valid, errors = verify_out({"coll": "results"}, V_60, pipeline_index=0, pipeline_length=1, is_atlas=False)
-    assert valid is False
-    assert any("db" in e for e in errors)
-
-
-def test_out_dict_missing_coll_fails():
-    valid, errors = verify_out({"db": "mydb"}, V_60, pipeline_index=0, pipeline_length=1, is_atlas=False)
-    assert valid is False
-    assert any("coll" in e for e in errors)

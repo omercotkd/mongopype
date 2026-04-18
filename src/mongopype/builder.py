@@ -103,9 +103,9 @@ class PipelineBuilder:
     ) -> "PipelineBuilder":
         spec: GraphLookupSpec = kwargs  # type: ignore
         if "from_" in kwargs:
-            spec["from"] = kwargs.pop("from_")
+            spec["from"] = kwargs.pop("from_") # type: ignore
         if "as_" in kwargs:
-            spec["as"] = kwargs.pop("as_")
+            spec["as"] = kwargs.pop("as_") # type: ignore
         return self.add_stage({"$graphLookup": spec})
 
     def group(
@@ -130,7 +130,7 @@ class PipelineBuilder:
     def list_local_sessions(
         self, **kwargs: Unpack[ListLocalSessionsKwargsSpec]
     ) -> "PipelineBuilder":
-        return self.add_stage({"$listLocalSessions": kwargs})
+        return self.add_stage({"$listLocalSessions": kwargs}) # type: ignore
 
     def list_sampled_queries(
         self, **kwargs: Unpack[ListSampledQueriesSpec]
@@ -145,14 +145,14 @@ class PipelineBuilder:
     def list_sessions(
         self, **kwargs: Unpack[ListSessionsKwargsSpec]
     ) -> "PipelineBuilder":
-        return self.add_stage({"$listSessions": kwargs})
+        return self.add_stage({"$listSessions": kwargs}) # type: ignore
 
     def lookup(self, **kwargs: Unpack[LookupKwargsSpec]) -> "PipelineBuilder":
         spec: LookupSpec = kwargs  # type: ignore
         if "from_" in kwargs:
-            spec["from"] = kwargs.pop("from_")
+            spec["from"] = kwargs.pop("from_") # type: ignore
         if "as_" in kwargs:
-            spec["as"] = kwargs.pop("as_")
+            spec["as"] = kwargs.pop("as_") # type: ignore
 
         return self.add_stage({"$lookup": spec})
 

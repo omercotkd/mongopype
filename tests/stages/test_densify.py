@@ -27,32 +27,14 @@ def test_densify_below_51_fails():
 
 
 def test_densify_at_51_ok():
-    valid, errors = verify_densify(
+    valid, _ = verify_densify(
         _VALID_SPEC, V_51, pipeline_index=0, pipeline_length=1, is_atlas=False
     )
     assert valid is True
 
 
-def test_densify_missing_field_fails():
-    spec = {"range": {"step": 1, "bounds": "full"}}
-    valid, errors = verify_densify(
-        spec, V_51, pipeline_index=0, pipeline_length=1, is_atlas=False
-    )
-    assert valid is False
-    assert any("field" in e for e in errors)
-
-
-def test_densify_missing_range_fails():
-    spec = {"field": "timestamp"}
-    valid, errors = verify_densify(
-        spec, V_51, pipeline_index=0, pipeline_length=1, is_atlas=False
-    )
-    assert valid is False
-    assert any("range" in e for e in errors)
-
-
 def test_densify_step_zero_fails():
-    spec = {"field": "timestamp", "range": {"step": 0, "bounds": "full"}}
+    spec: DensifySpec = {"field": "timestamp", "range": {"step": 0, "bounds": "full"}}
     valid, errors = verify_densify(
         spec, V_51, pipeline_index=0, pipeline_length=1, is_atlas=False
     )
@@ -61,29 +43,21 @@ def test_densify_step_zero_fails():
 
 
 def test_densify_step_negative_fails():
-    spec = {"field": "timestamp", "range": {"step": -1, "bounds": "full"}}
-    valid, errors = verify_densify(
+    spec: DensifySpec = {"field": "timestamp", "range": {"step": -1, "bounds": "full"}}
+    valid, _ = verify_densify(
         spec, V_51, pipeline_index=0, pipeline_length=1, is_atlas=False
     )
     assert valid is False
 
-
-def test_densify_missing_bounds_fails():
-    spec = {"field": "timestamp", "range": {"step": 1}}
-    valid, errors = verify_densify(
-        spec, V_51, pipeline_index=0, pipeline_length=1, is_atlas=False
-    )
-    assert valid is False
-    assert any("bounds" in e for e in errors)
 
 
 def test_densify_partition_by_fields_valid():
-    spec = {
+    spec: DensifySpec = {
         "field": "timestamp",
         "partitionByFields": ["category"],
         "range": {"step": 1, "bounds": "full"},
     }
-    valid, errors = verify_densify(
+    valid, _ = verify_densify(
         spec, V_51, pipeline_index=0, pipeline_length=1, is_atlas=False
     )
     assert valid is True

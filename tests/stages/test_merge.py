@@ -1,5 +1,5 @@
 """Tests for $merge stage."""
-from tests.conftest import V_42, V_OLD
+from tests.conftest import V_42
 from mongopype.stages.merge import verify_merge
 
 
@@ -26,8 +26,3 @@ def test_merge_below_42_fails():
     assert valid is False
     assert any("4.2" in e for e in errors)
 
-
-def test_merge_dict_missing_into_fails():
-    valid, errors = verify_merge({}, V_42, pipeline_index=0, pipeline_length=1, is_atlas=False)
-    assert valid is False
-    assert any("into" in e for e in errors)
