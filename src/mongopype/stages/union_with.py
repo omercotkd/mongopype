@@ -1,12 +1,12 @@
-from typing import Union, TypedDict, TYPE_CHECKING
+from typing import Union, TypedDict, TYPE_CHECKING, NotRequired
 from ..types import Version
 
 if TYPE_CHECKING:
     from ..pipeline import Pipeline
 
-class UnionWithFullSpec(TypedDict, total=False):
-    coll: str
-    pipeline: "Pipeline"
+class UnionWithFullSpec(TypedDict):
+    coll: NotRequired[str]
+    pipeline: NotRequired["Pipeline"]
 
 UnionWithSpec = Union[str, UnionWithFullSpec]
 

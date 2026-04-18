@@ -1,11 +1,11 @@
-from typing import Any, TypedDict
-from ..types import Version
+from typing import TypedDict, NotRequired
+from ..types import Version, Document
 
 
 
-class RankFusionSpec(TypedDict, total=False):
-    input: dict[str, Any]
-    combination: dict[str, Any]
+class RankFusionSpec(TypedDict):
+    input: Document
+    combination: NotRequired[Document]
 
 
 RankFusion = TypedDict("RankFusion", {"$rankFusion": RankFusionSpec})

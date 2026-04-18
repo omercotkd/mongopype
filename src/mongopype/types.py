@@ -162,3 +162,16 @@ SortOrder = dict[str, Union[Literal[1, -1], MetaTextScore]]
 class UserDocument(TypedDict):
     user: str
     db: str
+
+
+TimeUnit = Literal[
+    "millisecond",
+    "second",
+    "minute",
+    "hour",
+    "day",
+    "week",
+    "month",
+    "quarter",
+    "year",
+]

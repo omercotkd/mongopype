@@ -1,12 +1,14 @@
-from typing import Any, TypedDict
+from typing import Any, TypedDict, NotRequired
 from ..types import Version
 
 
 
-class ScoreSpec(TypedDict, total=False):
+class ScoreSpec(TypedDict):
     score: Any
-    normalizeFunction: str
-    weight: float
+    scoreDetails: NotRequired[bool]
+    normalization: NotRequired[str]
+    weight: NotRequired[float]
+
 
 
 Score = TypedDict("Score", {"$score": ScoreSpec})
@@ -24,9 +26,6 @@ def verify_score(
 
     if not is_atlas:
         errors.append("$score is only available on MongoDB Atlas.")
-
-    if "score" not in spec:
-        errors.append("$score requires the 'score' field.")
 
     if errors:
         return False, errors

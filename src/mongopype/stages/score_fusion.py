@@ -1,12 +1,10 @@
-from typing import Any, TypedDict
+from typing import Any, NotRequired, TypedDict
 from ..types import Version
 
-# (Future) Placeholder for $scoreFusion stage if available
-
-
-class ScoreFusionSpec(TypedDict, total=False):
-    inputNormalization: str
-    combination: dict[str, Any]
+class ScoreFusionSpec(TypedDict):
+    input: dict[str, Any]
+    combination: NotRequired[dict[str, Any]]
+    scoreDetails: NotRequired[bool]
 
 
 ScoreFusion = TypedDict("ScoreFusion", {"$scoreFusion": ScoreFusionSpec})

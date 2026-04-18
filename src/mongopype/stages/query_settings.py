@@ -1,10 +1,10 @@
-from typing import TypedDict
+from typing import TypedDict, NotRequired
 from ..types import Version
 
 
 
-class QuerySettingsSpec(TypedDict, total=False):
-    showDebugQueryShape: bool
+class QuerySettingsSpec(TypedDict):
+    showDebugQueryShape: NotRequired[bool]
 
 
 QuerySettings = TypedDict("QuerySettings", {"$querySettings": QuerySettingsSpec})

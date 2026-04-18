@@ -1,17 +1,14 @@
-# Done
-
-from typing import Literal, TypedDict, Any
+from typing import Literal, TypedDict, Any, NotRequired
 from ..types import Version
 
-# https://www.mongodb.com/docs/manual/reference/operator/aggregation/queryStats/
 
 
-class TransformIdentifiersSpec(TypedDict, total=False):
+class TransformIdentifiersSpec(TypedDict):
     algorithm: Literal["hmac-sha-256"]
     hmacKey: Any
 
-class QueryStatsSpec(TypedDict, total=False):
-    transformIdentifiers: TransformIdentifiersSpec
+class QueryStatsSpec(TypedDict):
+    transformIdentifiers: NotRequired[TransformIdentifiersSpec]
 
 
 QueryStats = TypedDict("QueryStats", {"$queryStats": QueryStatsSpec})
