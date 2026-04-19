@@ -111,7 +111,7 @@ class PipelineBuilder:
     def group(
         self,
         **kwargs: Union[
-            mongopype_types.Expression, mongopype_types.AccumulatorExpression
+            mongopype_types.Expression, mongopype_types.AccumulatorExpression, None
         ],
     ) -> "PipelineBuilder":
         return self.add_stage({"$group": kwargs})

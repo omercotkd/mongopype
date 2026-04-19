@@ -176,6 +176,13 @@ __MAPPING__: dict[Stage, ValidationFunction] = {
 
 
 class Pipeline(list[PipelineHint]):
+    """
+    A list wrapper for a list of aggregations stages, will let you know if the stage is valid
+    before you run it against the database. You can also use PipelineBuilder for a more fluent interface.
+
+    It will show you all the not correct stages in the pipeline (syntax-wise, not against the database).
+    You can also call the pipeline.verify() method at any point to check if the pipeline is valid. (Against the MongoDB version you're using, and whether you're using Atlas or not).
+    """
 
     def verify(
         self, version: Version, is_atlas: bool = False
@@ -192,7 +199,9 @@ class Pipeline(list[PipelineHint]):
                 if not valid:
                     all_errors.append((f"Stage {index} ({stage_key}):", errors))
             else:
-                all_errors.append((f"Stage {index} ({stage_key}):", ["Unknown stage operator."]))
+                all_errors.append(
+                    (f"Stage {index} ({stage_key}):", ["Unknown stage operator."])
+                )
         if all_errors:
             return False, all_errors
         return True, []
