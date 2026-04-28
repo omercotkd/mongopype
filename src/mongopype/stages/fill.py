@@ -1,4 +1,4 @@
-from typing import Literal, TypedDict, Union, NotRequired
+from typing import Literal, TypedDict, NotRequired
 from ..types import Version, Expression, SortOrder
 
 class FillOutputValueField(TypedDict):
@@ -9,7 +9,7 @@ class FillOutputMethodField(TypedDict):
     method: Literal["linear", "locf"]
 
 
-FillOutputField = Union[FillOutputValueField, FillOutputMethodField]
+FillOutputField = FillOutputValueField | FillOutputMethodField
 
 
 class FillSpec(TypedDict):

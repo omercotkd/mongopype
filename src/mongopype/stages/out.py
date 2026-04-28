@@ -1,4 +1,4 @@
-from typing import Union, TypedDict, NotRequired, Literal
+from typing import TypedDict, NotRequired, Literal
 from ..types import Version, OutputInto
 
 
@@ -16,7 +16,7 @@ class OutputIntoTimeSeries(OutputInto):
     timeseries: TimeSeriesSpec
 
 
-OutSpec = Union[str, OutputInto, OutputIntoTimeSeries]
+OutSpec = str | OutputInto | OutputIntoTimeSeries
 
 Out = TypedDict("Out", {"$out": OutSpec})
 """

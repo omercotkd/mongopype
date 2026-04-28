@@ -1,10 +1,10 @@
-from typing import TypedDict, NotRequired, Literal, Any, Union
+from typing import TypedDict, NotRequired, Literal, Any
 from ..types import Version, TimeUnit
 
 
 class DensifyRange(TypedDict):
-    bounds: Union[Literal["full", "partition"], tuple[Any, Any]]
-    step: Union[int, float]
+    bounds: Literal["full", "partition"] | tuple[Any, Any]
+    step: int | float
     unit: NotRequired[TimeUnit]
 
 

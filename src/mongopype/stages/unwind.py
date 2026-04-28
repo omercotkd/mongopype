@@ -1,4 +1,4 @@
-from typing import Union, TypedDict
+from typing import TypedDict
 from ..types import Version
 
 
@@ -9,7 +9,7 @@ class UnwindDocSpec(TypedDict, total=False):
     preserveNullAndEmptyArrays: bool
 
 
-UnwindSpec = Union[str, UnwindDocSpec]
+UnwindSpec = str | UnwindDocSpec
 
 Unwind = TypedDict("Unwind", {"$unwind": UnwindSpec})
 """

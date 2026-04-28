@@ -1,4 +1,5 @@
-from typing import Callable, Literal, Any, TypedDict, Union
+from typing import Literal, Any, TypedDict
+from collections.abc import Callable
 from bson import (
     ObjectId,
     DatetimeMS,
@@ -20,33 +21,33 @@ Version = tuple[int, int]  # major, minor
 
 ValidationFunction = Callable[[Any, Version, int, int, bool], tuple[bool, list[str]]]
 
-BSON = Union[
-    str,
-    bytes,
-    int,
-    float,
-    bool,
-    None,
-    DatetimeMS,
-    ObjectId,
-    Binary,
-    Code,
-    DBRef,
-    MaxKey,
-    MinKey,
-    Regex[str],
-    Regex[bytes],
-    Timestamp,
-    Decimal128,
-    Int64,
-    datetime.datetime,
-    uuid.UUID,
-    tuple["BSON", ...],
-    dict[str, "BSON"],
-    list["BSON"],
-]
+BSON = (
+    str
+    | bytes
+    | int
+    | float
+    | bool
+    | None
+    | DatetimeMS
+    | ObjectId
+    | Binary
+    | Code
+    | DBRef
+    | MaxKey
+    | MinKey
+    | Regex[str]
+    | Regex[bytes]
+    | Timestamp
+    | Decimal128
+    | Int64
+    | datetime.datetime
+    | uuid.UUID
+    | tuple["BSON", ...]
+    | dict[str, "BSON"]
+    | list["BSON"]
+)
 
-Expression = Union[str, int, float, dict[str, Any], list[Any]]
+Expression = str | int | float | dict[str, Any] | list[Any]
 
 
 Document = dict[str, BSON]
@@ -156,7 +157,7 @@ class OutputInto(TypedDict):
 
 MetaTextScore = dict[Literal["$meta"], Literal["textScore"]]
 
-SortOrder = dict[str, Union[Literal[1, -1], MetaTextScore]]
+SortOrder = dict[str, Literal[1, -1] | MetaTextScore]
 
 
 class UserDocument(TypedDict):

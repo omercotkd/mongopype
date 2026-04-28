@@ -1,4 +1,4 @@
-from typing import TypedDict, Union, NotRequired
+from typing import TypedDict, NotRequired
 from datetime import datetime
 from ..types import AccumulatorExpression, Expression, Version
 from ..verify import verify_accumulator_expression
@@ -6,8 +6,8 @@ from ..verify import verify_accumulator_expression
 
 class BucketSpec(TypedDict):
     groupBy: Expression
-    boundaries: Union[list[int], list[float], list[str], list[datetime]]
-    default: NotRequired[Union[int, float, str, datetime]]
+    boundaries: list[int] | list[float] | list[str] | list[datetime]
+    default: NotRequired[int | float | str | datetime]
     """
     Default is the ID of the bucket for all the documents that do not fit into the specified boundaries.
     """

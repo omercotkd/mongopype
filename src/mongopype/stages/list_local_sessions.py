@@ -1,4 +1,4 @@
-from typing import NotRequired, Union, TypedDict
+from typing import NotRequired, TypedDict
 from ..types import Version, UserDocument
 
 
@@ -11,7 +11,7 @@ class _UsersSpec(TypedDict):
     users: list[UserDocument]
 
 
-ListLocalSessionsSpec = Union[_AllUsersSpec, _UsersSpec]
+ListLocalSessionsSpec = _AllUsersSpec | _UsersSpec
 
 
 class ListLocalSessionsKwargsSpec(TypedDict):

@@ -1,5 +1,4 @@
-from typing import Union, cast
-
+from typing import cast
 from .types import ValidationFunction, Version, Stage
 from .stages.add_fields import AddFields, verify_add_fields
 from .stages.bucket import Bucket, verify_bucket
@@ -70,57 +69,57 @@ from .stages.unwind import Unwind, verify_unwind
 from .stages.vector_search import VectorSearch, verify_vector_search
 
 
-PipelineHint = Union[
-    AddFields,
-    Bucket,
-    BucketAuto,
-    ChangeStream,
-    ChangeStreamSplitLargeEvent,
-    CollStats,
-    Count,
-    CurrentOp,
-    Densify,
-    Documents,
-    Facet,
-    Fill,
-    GeoNear,
-    GraphLookup,
-    Group,
-    IndexStats,
-    Limit,
-    ListClusterCatalog,
-    ListLocalSessions,
-    ListSampledQueries,
-    ListSearchIndexes,
-    ListSessions,
-    Lookup,
-    Match,
-    Merge,
-    Out,
-    PlanCacheStats,
-    Project,
-    QuerySettings,
-    QueryStats,
-    RankFusion,
-    Redact,
-    ReplaceRoot,
-    ReplaceWith,
-    Sample,
-    Score,
-    ScoreFusion,
-    Search,
-    SearchMeta,
-    Set,
-    SetWindowFields,
-    ShardedDataDistribution,
-    Skip,
-    Sort,
-    SortByCount,
-    UnionWith,
-    Unset,
-    Unwind,
-    VectorSearch,
-]
+PipelineHint = (
+    AddFields
+    | Bucket
+    | BucketAuto
+    | ChangeStream
+    | ChangeStreamSplitLargeEvent
+    | CollStats
+    | Count
+    | CurrentOp
+    | Densify
+    | Documents
+    | Facet
+    | Fill
+    | GeoNear
+    | GraphLookup
+    | Group
+    | IndexStats
+    | Limit
+    | ListClusterCatalog
+    | ListLocalSessions
+    | ListSampledQueries
+    | ListSearchIndexes
+    | ListSessions
+    | Lookup
+    | Match
+    | Merge
+    | Out
+    | PlanCacheStats
+    | Project
+    | QuerySettings
+    | QueryStats
+    | RankFusion
+    | Redact
+    | ReplaceRoot
+    | ReplaceWith
+    | Sample
+    | Score
+    | ScoreFusion
+    | Search
+    | SearchMeta
+    | Set
+    | SetWindowFields
+    | ShardedDataDistribution
+    | Skip
+    | Sort
+    | SortByCount
+    | UnionWith
+    | Unset
+    | Unwind
+    | VectorSearch
+)
 
 __MAPPING__: dict[Stage, ValidationFunction] = {
     "$addFields": verify_add_fields,

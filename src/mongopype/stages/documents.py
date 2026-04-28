@@ -1,8 +1,8 @@
-from typing import Union, TypedDict
+from typing import TypedDict
 from ..types import Document, Expression, Version
 
 
-DocumentsSpec = Union[list[Document], Expression]
+DocumentsSpec = list[Document] | Expression
 
 Documents = TypedDict("Documents", {"$documents": DocumentsSpec})
 """

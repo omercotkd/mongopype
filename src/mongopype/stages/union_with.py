@@ -1,4 +1,4 @@
-from typing import Union, TypedDict, TYPE_CHECKING, NotRequired
+from typing import TypedDict, TYPE_CHECKING, NotRequired
 from ..types import Version
 
 if TYPE_CHECKING:
@@ -8,7 +8,7 @@ class UnionWithFullSpec(TypedDict):
     coll: NotRequired[str]
     pipeline: NotRequired["Pipeline"]
 
-UnionWithSpec = Union[str, UnionWithFullSpec]
+UnionWithSpec = str | UnionWithFullSpec
 
 UnionWith = TypedDict("UnionWith", {"$unionWith": UnionWithSpec})
 """

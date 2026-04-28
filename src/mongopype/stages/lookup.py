@@ -1,4 +1,4 @@
-from typing import Any, Union, TypedDict, TYPE_CHECKING, NotRequired
+from typing import Any, TypedDict, TYPE_CHECKING, NotRequired
 from ..types import Version
 
 
@@ -39,7 +39,7 @@ MixedLookupSpec = TypedDict(
 )
 
 
-LookupSpec = Union[LookupEqualitySpec, LookupPipelineSpec, MixedLookupSpec]
+LookupSpec = LookupEqualitySpec | LookupPipelineSpec | MixedLookupSpec
 
 
 class LookupKwargsSpec(TypedDict):

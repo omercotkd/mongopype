@@ -1,4 +1,4 @@
-from typing import Union, Unpack, Literal, Any
+from typing import Unpack, Literal, Any
 from . import types as mongopype_types
 from .pipeline import Pipeline, PipelineHint
 from .stages.bucket import BucketSpec
@@ -110,9 +110,7 @@ class PipelineBuilder:
 
     def group(
         self,
-        **kwargs: Union[
-            mongopype_types.Expression, mongopype_types.AccumulatorExpression, None
-        ],
+        **kwargs: mongopype_types.Expression | mongopype_types.AccumulatorExpression | None,
     ) -> "PipelineBuilder":
         return self.add_stage({"$group": kwargs})
 
@@ -224,7 +222,7 @@ class PipelineBuilder:
         return self.add_stage({"$skip": skip})
 
     def sort(
-        self, **kwargs: Union[Literal[1, -1], mongopype_types.MetaTextScore]
+        self, **kwargs: Literal[1, -1] | mongopype_types.MetaTextScore
     ) -> "PipelineBuilder":
         return self.add_stage({"$sort": kwargs})
 
@@ -234,7 +232,7 @@ class PipelineBuilder:
     def union_with(self, **kwargs: Unpack[UnionWithFullSpec]) -> "PipelineBuilder":
         return self.add_stage({"$unionWith": kwargs})
 
-    def unset(self, fields: Union[str, list[str]]) -> "PipelineBuilder":
+    def unset(self, fields: str | list[str]) -> "PipelineBuilder":
         return self.add_stage({"$unset": fields})
 
     def unwind(self, **kwargs: Unpack[UnwindDocSpec]) -> "PipelineBuilder":

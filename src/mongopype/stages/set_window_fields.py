@@ -1,4 +1,4 @@
-from typing import TypedDict, NotRequired, Literal, Union, Any
+from typing import TypedDict, NotRequired, Literal, Any
 from ..types import Version, Expression, SortOrder, TimeUnit
 
 WindowOperators = Literal[
@@ -39,15 +39,15 @@ WindowOperators = Literal[
 
 
 class WindowOperatorRangeSpec(TypedDict):
-    range: list[Union[Literal["unbounded", "current"], int, float]]
+    range: list[Literal["unbounded", "current"] | int | float]
     unit: TimeUnit
 
 
 class WindowOperatorDocumentsSpec(TypedDict):
-    documents: list[Union[Literal["unbounded", "current"], int, float]]
+    documents: list[Literal["unbounded", "current"] | int | float]
 
 
-WindowOperatorsSpec = Union[WindowOperatorRangeSpec, WindowOperatorDocumentsSpec]
+WindowOperatorsSpec = WindowOperatorRangeSpec | WindowOperatorDocumentsSpec
 
 OutputWindowOperatorSpec = TypedDict(
     "OutputWindowOperatorSpec",

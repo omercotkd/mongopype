@@ -1,8 +1,8 @@
-from typing import Union, TypedDict
+from typing import TypedDict
 from ..types import Expression, AccumulatorExpression, Version
 
 
-GroupSpec = dict[str, Union[Expression, AccumulatorExpression, None]]
+GroupSpec = dict[str, Expression | AccumulatorExpression | None]
 
 Group = TypedDict("Group", {"$group": GroupSpec})
 """

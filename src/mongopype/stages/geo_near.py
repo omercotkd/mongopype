@@ -1,4 +1,4 @@
-from typing import Literal, Union, TypedDict, NotRequired
+from typing import Literal, TypedDict, NotRequired
 from ..types import Version, Document
 
 
@@ -8,7 +8,7 @@ class GeoJSONPoint(TypedDict):
 
 
 class GeoNearSpec(TypedDict):
-    near: Union[GeoJSONPoint, list[float]]
+    near: GeoJSONPoint | list[float]
     distanceField: NotRequired[str] 
     """
     not required since MongoDB 8.1 for queries on non time-series collections

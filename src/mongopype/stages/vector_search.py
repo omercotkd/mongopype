@@ -1,11 +1,11 @@
-from typing import Any, Union, TypedDict
+from typing import Any, TypedDict
 from ..types import Version
 
 
 
 class VectorSearchSpec(TypedDict, total=False):
     index: str
-    path: Union[str, list[str]]
+    path: str | list[str]
     queryVector: list[float]
     numCandidates: int
     limit: int

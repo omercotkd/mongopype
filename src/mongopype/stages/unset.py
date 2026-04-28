@@ -1,8 +1,8 @@
-from typing import Union, TypedDict
+from typing import TypedDict
 from ..types import Version
 
 
-UnsetSpec = Union[str, list[str]]
+UnsetSpec = str | list[str]
 
 Unset = TypedDict("Unset", {"$unset": UnsetSpec})
 """
